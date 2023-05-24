@@ -25,4 +25,3 @@ class ColorSpaceTransformation {
         [0.0259040371, 0.7827717662, -0.8086757660]
     ])
 }
-

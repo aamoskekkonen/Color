@@ -11,32 +11,30 @@ struct OklchColor {
     let l: CGFloat
     let c: CGFloat
     let h: CGFloat
-    
-    var a: CGFloat {
-        return c * cos(h)
-    }
-    
-    var b: CGFloat {
-        return c * sin(h)
-    }
+    let a: CGFloat
+    let b: CGFloat
     
     init(l: CGFloat, c: CGFloat, h: CGFloat) {
         self.l = l
         self.c = c
         self.h = h
+        let radianH = ((h - 180) / 180) * CGFloat.pi
+        self.a = c * cos(radianH)
+        self.b = c * sin(radianH)
     }
     
     init(x: CGFloat, y: CGFloat, z: CGFloat) {
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
-        let nonLinearLms = Matrix(column: (pow(lms[0, 0], 1.0/3), pow(lms[1, 0], 1.0/3), pow(lms[2, 0], 1.0/3)))
+        let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
         let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToLab.matrix * nonLinearLms
                                   
         self.l = lab[0, 0]
-        let a = lab[1, 0]
-        let b = lab[2, 0]
+        self.a = lab[1, 0]
+        self.b = lab[2, 0]
                                   
         self.c = sqrt(pow(a, 2) + pow(b, 2))
-        self.h = atan2(b, a)
+        let radianH = atan2(b, a)
+        self.h = radianH >= 0 ? (radianH / CGFloat.pi) * 180 : (radianH / CGFloat.pi) * 180 + 360
     }
     
     init(xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
