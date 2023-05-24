@@ -63,7 +63,7 @@ struct OklchColor {
     
     var displayP3: CGColor {
         let xyzColorSpace = CGColorSpace(name: CGColorSpace.genericXYZ)!
-        let xyzColor = CGColor(colorSpace: xyzColorSpace, components: [xyz[0, 0], xyz[1, 0], xyz[2, 0]])!
+        let xyzColor = CGColor(colorSpace: xyzColorSpace, components: [xyz[0, 0], xyz[1, 0], xyz[2, 0], 1.0])!
         return xyzColor.converted(to: CGColorSpace(name: CGColorSpace.displayP3)!, intent: .absoluteColorimetric, options: nil)!
     }
 }
