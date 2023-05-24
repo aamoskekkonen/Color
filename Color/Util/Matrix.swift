@@ -10,9 +10,9 @@ import Foundation
 infix operator ≈: ComparisonPrecedence
 
 struct Matrix {
-    var data: [[Double]]
+    var data: [[CGFloat]]
     
-    init(_ data: [[Double]]) {
+    init(_ data: [[CGFloat]]) {
         self.data = data
     }
     
@@ -28,7 +28,7 @@ struct Matrix {
         return data[0].count
     }
 
-    subscript(row: Int, col: Int) -> Double {
+    subscript(row: Int, col: Int) -> CGFloat {
         get {
             assert(row < rows && col < columns, "Index out of range")
             return data[row][col]
@@ -66,7 +66,7 @@ func * (left: Matrix, right: Matrix) -> Matrix {
 }
 
 func ≈ (left: Matrix, right: Matrix) -> Bool {
-    let tolerance: Double = 1e-6
+    let tolerance: CGFloat = 1e-6
     assert(left.rows == right.rows && left.columns == right.columns, "Matrix dimensions should match for comparison.")
     for i in 0..<left.rows {
         for j in 0..<left.columns {

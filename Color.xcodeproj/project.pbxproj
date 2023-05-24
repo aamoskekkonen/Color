@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */; };
+		7E99EA832A1DF859009C3F4F /* OklchColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */; };
+		7E99EA852A1DF995009C3F4F /* ColorSpaceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */; };
 		7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */; };
 		7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2782A1DE8A00058F2DC /* ContentView.swift */; };
 		7E9DE27B2A1DE8A10058F2DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E9DE27A2A1DE8A10058F2DC /* Assets.xcassets */; };
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OklchColor.swift; sourceTree = "<group>"; };
+		7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OklchColorTests.swift; sourceTree = "<group>"; };
+		7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSpaceTransformation.swift; sourceTree = "<group>"; };
 		7E9DE2732A1DE8A00058F2DC /* Color.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Color.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorApp.swift; sourceTree = "<group>"; };
 		7E9DE2782A1DE8A00058F2DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 			children = (
 				7E9DE2872A1DE8A10058F2DC /* ColorTests.swift */,
 				7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */,
+				7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */,
 			);
 			path = ColorTests;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */,
+				7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 			files = (
 				7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */,
 				7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */,
+				7E99EA852A1DF995009C3F4F /* ColorSpaceTransformation.swift in Sources */,
 				7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */,
 				7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */,
 			);
@@ -309,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E99EA832A1DF859009C3F4F /* OklchColorTests.swift in Sources */,
 				7E9DE2A82A1DE9CD0058F2DC /* MatrixTests.swift in Sources */,
 				7E9DE2882A1DE8A10058F2DC /* ColorTests.swift in Sources */,
 			);
