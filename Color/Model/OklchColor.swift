@@ -12,18 +12,18 @@ struct OklchColor {
     let c: CGFloat
     let h: CGFloat
     
-    init(l: CGFloat, c: CGFloat, h: CGFloat) {
-        self.l = l
-        self.c = c
-        self.h = h
-    }
-    
     var a: CGFloat {
         return c * cos(h)
     }
     
     var b: CGFloat {
         return c * sin(h)
+    }
+    
+    init(l: CGFloat, c: CGFloat, h: CGFloat) {
+        self.l = l
+        self.c = c
+        self.h = h
     }
     
     init(x: CGFloat, y: CGFloat, z: CGFloat) {
@@ -37,5 +37,12 @@ struct OklchColor {
                                   
         self.c = sqrt(pow(a, 2) + pow(b, 2))
         self.h = atan2(b, a)
+    }
+    
+    init(xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
+        let x = (xChromaticity * luminance) / yChromaticity
+        let y = luminance
+        let z = (1.0 - xChromaticity - yChromaticity) * (luminance / yChromaticity)
+        self.init(x: x, y: y, z: z)
     }
 }
