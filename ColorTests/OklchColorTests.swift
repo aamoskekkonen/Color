@@ -17,12 +17,12 @@ final class OklchColorTests: XCTestCase {
     var color6: OklchColor!
 
     override func setUpWithError() throws {
-        color1 = OklchColor(x: 0.950, y: 1.000, z: 1.089) // white
-        color2 = OklchColor(x: 1.000, y: 0.000, z: 0.000) // dark brownish
-        color3 = OklchColor(x: 0.000, y: 1.000, z: 0.000) // light/baby greenish
-        color4 = OklchColor(x: 0.000, y: 0.000, z: 1.000) // pitch black cyan
-        color5 = OklchColor(xChromaticity: 0.3127, yChromaticity: 0.3290, luminance: 1.0000) // white
-        color6 = OklchColor(x: 0.6400, y: 0.3300, z: 0.2126)
+        color1 = OklchColor(name: "White", x: 0.950, y: 1.000, z: 1.089)
+        color2 = OklchColor(name: "Dark Brownish", x: 1.000, y: 0.000, z: 0.000)
+        color3 = OklchColor(name: "Baby Greenish", x: 0.000, y: 1.000, z: 0.000)
+        color4 = OklchColor(name: "Pitch Black Cyan", x: 0.000, y: 0.000, z: 1.000)
+        color5 = OklchColor(name: "D65", xChromaticity: 0.3127, yChromaticity: 0.3290, luminance: 1.0000)
+        color6 = OklchColor(name: "sRGB Red", x: 0.6400, y: 0.3300, z: 0.2126)
         super.setUp()
     }
 

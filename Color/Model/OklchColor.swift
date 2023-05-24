@@ -9,18 +9,21 @@ import Foundation
 import CoreGraphics
 
 struct OklchColor {
+    let name: String
     let l: CGFloat
     let c: CGFloat
     let h: CGFloat
     
-    init(l: CGFloat, c: CGFloat, h: CGFloat) {
+    init(name: String, l: CGFloat, c: CGFloat, h: CGFloat) {
+        self.name = name
         self.l = l
         self.c = c
         self.h = h
         let radianH = ((h - 180) / 180) * CGFloat.pi
     }
     
-    init(x: CGFloat, y: CGFloat, z: CGFloat) {
+    init(name: String, x: CGFloat, y: CGFloat, z: CGFloat) {
+        self.name = name
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
         let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToLab.matrix * nonLinearLms
@@ -34,11 +37,11 @@ struct OklchColor {
         self.h = radianH >= 0 ? (radianH / CGFloat.pi) * 180 : (radianH / CGFloat.pi) * 180 + 360
     }
     
-    init(xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
+    init(name: String, xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
         let x = (xChromaticity * luminance) / yChromaticity
         let y = luminance
         let z = (1.0 - xChromaticity - yChromaticity) * (luminance / yChromaticity)
-        self.init(x: x, y: y, z: z)
+        self.init(name: name, x: x, y: y, z: z)
     }
     
     private var hInRadians: CGFloat {
