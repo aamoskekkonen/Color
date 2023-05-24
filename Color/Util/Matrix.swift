@@ -11,9 +11,13 @@ infix operator ≈: ComparisonPrecedence
 
 struct Matrix {
     var data: [[Double]]
-
+    
     init(_ data: [[Double]]) {
         self.data = data
+    }
+    
+    init(column: (CGFloat, CGFloat, CGFloat)) {
+        self.data = [[column.0], [column.1], [column.2]]
     }
 
     var rows: Int {
