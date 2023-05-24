@@ -18,6 +18,14 @@ struct OklchColor {
         self.h = h
     }
     
+    var a: CGFloat {
+        return c * cos(h)
+    }
+    
+    var b: CGFloat {
+        return c * sin(h)
+    }
+    
     init(x: CGFloat, y: CGFloat, z: CGFloat) {
         let XYZToLms = Matrix([
             [0.8189330101, 0.3618667424, -0.1288597137],
@@ -33,12 +41,11 @@ struct OklchColor {
         let nonLinearLms = Matrix(column: (pow(lms[0, 0], 1.0/3),
                                            pow(lms[1, 0], 1.0/3),
                                            pow(lms[2, 0], 1.0/3)))
-        let result: Matrix = nonLinearLmsToLab * nonLinearLms
+        let lab: Matrix = nonLinearLmsToLab * nonLinearLms
                                   
-        self.l = result[0, 0]
-                                  
-        let a = result[1, 0]
-        let b = result[2, 0]
+        self.l = lab[0, 0]
+        let a = lab[1, 0]
+        let b = lab[2, 0]
                                   
         self.c = sqrt(pow(a, 2) + pow(b, 2))
         self.h = atan2(b, a)
