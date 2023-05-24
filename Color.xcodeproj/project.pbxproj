@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */; };
 		7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */; };
 		7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2782A1DE8A00058F2DC /* ContentView.swift */; };
 		7E9DE27B2A1DE8A10058F2DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E9DE27A2A1DE8A10058F2DC /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OklchColor.swift; sourceTree = "<group>"; };
 		7E9DE2732A1DE8A00058F2DC /* Color.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Color.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorApp.swift; sourceTree = "<group>"; };
 		7E9DE2782A1DE8A00058F2DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		7E9DE2A22A1DE9720058F2DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */,
 				7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */,
 				7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */,
+				7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
