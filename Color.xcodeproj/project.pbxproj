@@ -15,6 +15,7 @@
 		7E9DE2922A1DE8A10058F2DC /* ColorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2912A1DE8A10058F2DC /* ColorUITests.swift */; };
 		7E9DE2942A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */; };
 		7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */; };
+		7E9DE2A82A1DE9CD0058F2DC /* MatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		7E9DE2912A1DE8A10058F2DC /* ColorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUITests.swift; sourceTree = "<group>"; };
 		7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				7E9DE2872A1DE8A10058F2DC /* ColorTests.swift */,
+				7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */,
 			);
 			path = ColorTests;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E9DE2A82A1DE9CD0058F2DC /* MatrixTests.swift in Sources */,
 				7E9DE2882A1DE8A10058F2DC /* ColorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
