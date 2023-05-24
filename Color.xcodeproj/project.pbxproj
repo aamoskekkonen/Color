@@ -14,6 +14,7 @@
 		7E9DE2882A1DE8A10058F2DC /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2872A1DE8A10058F2DC /* ColorTests.swift */; };
 		7E9DE2922A1DE8A10058F2DC /* ColorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2912A1DE8A10058F2DC /* ColorUITests.swift */; };
 		7E9DE2942A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */; };
+		7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		7E9DE28D2A1DE8A10058F2DC /* ColorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E9DE2912A1DE8A10058F2DC /* ColorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUITests.swift; sourceTree = "<group>"; };
 		7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,10 @@
 		7E9DE2752A1DE8A00058F2DC /* Color */ = {
 			isa = PBXGroup;
 			children = (
+				7E9DE2A32A1DE9750058F2DC /* Util */,
+				7E9DE2A22A1DE9720058F2DC /* Model */,
+				7E9DE2A12A1DE96E0058F2DC /* View */,
+				7E9DE2A02A1DE9550058F2DC /* ViewModel */,
 				7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */,
 				7E9DE2782A1DE8A00058F2DC /* ContentView.swift */,
 				7E9DE27A2A1DE8A10058F2DC /* Assets.xcassets */,
@@ -125,6 +131,35 @@
 				7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */,
 			);
 			path = ColorUITests;
+			sourceTree = "<group>";
+		};
+		7E9DE2A02A1DE9550058F2DC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7E9DE2A12A1DE96E0058F2DC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E9DE2A22A1DE9720058F2DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7E9DE2A32A1DE9750058F2DC /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +294,7 @@
 			files = (
 				7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */,
 				7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */,
+				7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
