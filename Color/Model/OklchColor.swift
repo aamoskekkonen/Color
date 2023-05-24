@@ -6,21 +6,18 @@
 //
 
 import Foundation
+import CoreGraphics
 
 struct OklchColor {
     let l: CGFloat
     let c: CGFloat
     let h: CGFloat
-    let a: CGFloat
-    let b: CGFloat
     
     init(l: CGFloat, c: CGFloat, h: CGFloat) {
         self.l = l
         self.c = c
         self.h = h
         let radianH = ((h - 180) / 180) * CGFloat.pi
-        self.a = c * cos(radianH)
-        self.b = c * sin(radianH)
     }
     
     init(x: CGFloat, y: CGFloat, z: CGFloat) {
@@ -29,8 +26,8 @@ struct OklchColor {
         let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToLab.matrix * nonLinearLms
                                   
         self.l = lab[0, 0]
-        self.a = lab[1, 0]
-        self.b = lab[2, 0]
+        let a = lab[1, 0]
+        let b = lab[2, 0]
                                   
         self.c = sqrt(pow(a, 2) + pow(b, 2))
         let radianH = atan2(b, a)
@@ -42,5 +39,31 @@ struct OklchColor {
         let y = luminance
         let z = (1.0 - xChromaticity - yChromaticity) * (luminance / yChromaticity)
         self.init(x: x, y: y, z: z)
+    }
+    
+    private var hInRadians: CGFloat {
+        return ((h - 180) / 180) * CGFloat.pi
+    }
+    
+    private var lab: Matrix {
+        return Matrix(column: (l, c * cos(hInRadians), c * sin(hInRadians)))
+    }
+    
+    private var lms: Matrix {
+        let nonLinearLms = ColorSpaceTransformation.labToNonLinearLms.matrix * lab
+        let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
+                                        pow(nonLinearLms[1, 0], 3),
+                                        pow(nonLinearLms[2, 0], 3)))
+        return linearLms
+    }
+    
+    private var xyz: Matrix {
+        return ColorSpaceTransformation.LmsToXYZ.matrix * lms
+    }
+    
+    var displayP3: CGColor {
+        let xyzColorSpace = CGColorSpace(name: CGColorSpace.genericXYZ)!
+        let xyzColor = CGColor(colorSpace: xyzColorSpace, components: [xyz[0, 0], xyz[1, 0], xyz[2, 0]])!
+        return xyzColor.converted(to: CGColorSpace(name: CGColorSpace.displayP3)!, intent: .absoluteColorimetric, options: nil)!
     }
 }
