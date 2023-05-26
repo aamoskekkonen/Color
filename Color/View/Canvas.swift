@@ -14,20 +14,41 @@ struct Canvas: View {
         self.vm = CanvasViewModel(
             colors: try! FileReader.readColors(),
             initialCanvasWidth: defaultWidth,
-            initialPointDiameter: 15.0)
+            initialPointDiameter: 8.0)
     }
     
     var body: some View {
-        ForEach(vm.data) { colorRepresentationData in
-            let color = colorRepresentationData.color
-            let point = colorRepresentationData.point
-            let diameter = colorRepresentationData.diameter
+        ZStack {
             Circle()
-                .foregroundColor(color.displayP3)
-                .frame(width: diameter, height: diameter)
-                .position(point)
-            
+                .fill(Color.white)
+                .overlay(Circle().stroke(
+                    Color.black,
+                    style: StrokeStyle(lineWidth: 2.5)))
+                .frame(width: vm.currentCanvasWidth,
+                       height: vm.currentCanvasWidth)
+            Circle()
+                .frame(width: 5.0, height: 5.0)
+            ForEach(vm.data) { colorRepresentationData in
+                let color = colorRepresentationData.color
+                let point = colorRepresentationData.point
+                let diameter = colorRepresentationData.diameter
+                ZStack {
+                    Circle()
+                        .foregroundColor(color.displayP3)
+                        .frame(width: diameter, height: diameter)
+                        .position(point)
+                    Text(colorRepresentationData.color.name)
+                        .font(.system(size: 11))
+                        .position(point)
+                        .offset(y: 10.0)
+                }
+                .onTapGesture {
+                    colorRepresentationData.select()
+                }
+                
+            }
         }
+        .frame(width: vm.currentCanvasWidth, height: vm.currentCanvasWidth)
     }
 }
 

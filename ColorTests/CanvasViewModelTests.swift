@@ -20,9 +20,11 @@ final class CanvasViewModelTests: XCTestCase {
     }
     
     func testInit() throws {
-        let lilacRepresentation = vm.data.first!
-        let lilacX = lilacRepresentation.point.x
-        let lilacY = lilacRepresentation.point.y
+        let colorRepresentation = vm.data.first!
+        let x = colorRepresentation.point.x
+        let y = colorRepresentation.point.y
+        print((colorRepresentation.color.a, colorRepresentation.color.b))
+        print((x, y))
         /// complete later
     }
 
