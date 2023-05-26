@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E22F4BB2A20D6A6009F2194 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F4BA2A20D6A6009F2194 /* FileReader.swift */; };
+		7E22F4BD2A20D745009F2194 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F4BC2A20D745009F2194 /* MainViewModel.swift */; };
+		7E22F4BF2A20DF3B009F2194 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F4BE2A20DF3B009F2194 /* CanvasViewModel.swift */; };
+		7E22F4C12A20DF7F009F2194 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F4C02A20DF7F009F2194 /* Canvas.swift */; };
+		7E22F4C52A20EBE7009F2194 /* CanvasViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22F4C42A20EBE7009F2194 /* CanvasViewModelTests.swift */; };
 		7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */; };
 		7E99EA832A1DF859009C3F4F /* OklchColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */; };
 		7E99EA852A1DF995009C3F4F /* ColorSpaceTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */; };
@@ -41,6 +46,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E22F4BA2A20D6A6009F2194 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
+		7E22F4BC2A20D745009F2194 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		7E22F4BE2A20DF3B009F2194 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		7E22F4C02A20DF7F009F2194 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		7E22F4C42A20EBE7009F2194 /* CanvasViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModelTests.swift; sourceTree = "<group>"; };
 		7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OklchColor.swift; sourceTree = "<group>"; };
 		7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OklchColorTests.swift; sourceTree = "<group>"; };
 		7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSpaceTransformation.swift; sourceTree = "<group>"; };
@@ -122,7 +132,6 @@
 				7E9DE2A12A1DE96E0058F2DC /* View */,
 				7E9DE2A02A1DE9550058F2DC /* ViewModel */,
 				7E9DE2762A1DE8A00058F2DC /* ColorApp.swift */,
-				7E9DE2782A1DE8A00058F2DC /* ContentView.swift */,
 				7E9DE27A2A1DE8A10058F2DC /* Assets.xcassets */,
 				7E9DE27C2A1DE8A10058F2DC /* Preview Content */,
 			);
@@ -143,6 +152,7 @@
 				7E9DE2872A1DE8A10058F2DC /* ColorTests.swift */,
 				7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */,
 				7E99EA822A1DF859009C3F4F /* OklchColorTests.swift */,
+				7E22F4C42A20EBE7009F2194 /* CanvasViewModelTests.swift */,
 			);
 			path = ColorTests;
 			sourceTree = "<group>";
@@ -159,6 +169,8 @@
 		7E9DE2A02A1DE9550058F2DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7E22F4BC2A20D745009F2194 /* MainViewModel.swift */,
+				7E22F4BE2A20DF3B009F2194 /* CanvasViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -166,6 +178,8 @@
 		7E9DE2A12A1DE96E0058F2DC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7E9DE2782A1DE8A00058F2DC /* ContentView.swift */,
+				7E22F4C02A20DF7F009F2194 /* Canvas.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +198,7 @@
 			children = (
 				7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */,
 				7E99EA862A1E1139009C3F4F /* MathUtils.swift */,
+				7E22F4BA2A20D6A6009F2194 /* FileReader.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -321,9 +336,13 @@
 			files = (
 				7E9DE2792A1DE8A00058F2DC /* ContentView.swift in Sources */,
 				7E9DE2772A1DE8A00058F2DC /* ColorApp.swift in Sources */,
+				7E22F4BF2A20DF3B009F2194 /* CanvasViewModel.swift in Sources */,
+				7E22F4C12A20DF7F009F2194 /* Canvas.swift in Sources */,
+				7E22F4BB2A20D6A6009F2194 /* FileReader.swift in Sources */,
 				7E99EA852A1DF995009C3F4F /* ColorSpaceTransformation.swift in Sources */,
 				7E99EA872A1E1139009C3F4F /* MathUtils.swift in Sources */,
 				7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */,
+				7E22F4BD2A20D745009F2194 /* MainViewModel.swift in Sources */,
 				7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E22F4C52A20EBE7009F2194 /* CanvasViewModelTests.swift in Sources */,
 				7E99EA832A1DF859009C3F4F /* OklchColorTests.swift in Sources */,
 				7E9DE2A82A1DE9CD0058F2DC /* MatrixTests.swift in Sources */,
 				7E9DE2882A1DE8A10058F2DC /* ColorTests.swift in Sources */,

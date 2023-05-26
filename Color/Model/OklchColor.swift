@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreGraphics
+import SwiftUI
 
-struct OklchColor {
+struct OklchColor: Decodable, Hashable {
     let name: String
     let l: CGFloat
     let c: CGFloat
@@ -19,7 +20,6 @@ struct OklchColor {
         self.l = l
         self.c = c
         self.h = h
-        let radianH = ((h - 180) / 180) * CGFloat.pi
     }
     
     init(name: String, x: CGFloat, y: CGFloat, z: CGFloat) {
@@ -64,9 +64,48 @@ struct OklchColor {
         return ColorSpaceTransformation.LmsToXYZ.matrix * lms
     }
     
-    var displayP3: CGColor {
-        let xyzColorSpace = CGColorSpace(name: CGColorSpace.genericXYZ)!
-        let xyzColor = CGColor(colorSpace: xyzColorSpace, components: [xyz[0, 0], xyz[1, 0], xyz[2, 0], 1.0])!
-        return xyzColor.converted(to: CGColorSpace(name: CGColorSpace.displayP3)!, intent: .absoluteColorimetric, options: nil)!
+    var displayP3: Color {
+        func gammaCorrect(_ value: CGFloat) -> CGFloat {
+            if value <= 0.0031308 {
+                return 12.92 * value
+            } else {
+                return 1.055 * pow(value, 1/2.4) - 0.055
+            }
+        }
+        
+        let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
+        let linearR = displayP3Matrix[0, 0]
+        let linearG = displayP3Matrix[1, 0]
+        let linearB = displayP3Matrix[2, 0]
+
+        let r = gammaCorrect(linearR)
+        let g = gammaCorrect(linearG)
+        let b = gammaCorrect(linearB)
+
+        return Color(.displayP3, red: r, green: g, blue: b, opacity: 1.0)
     }
+    
+    var a: CGFloat {
+        return lab[1,0]
+    }
+    
+    var b: CGFloat {
+        return lab[2,0]
+    }
+    
+    static let maxA: CGFloat = 1.0
+    static let maxB: CGFloat = 1.0
+    
+}
+
+extension OklchColor {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(l)
+        hasher.combine(c)
+        hasher.combine(h)
+    }
+    
+    
 }

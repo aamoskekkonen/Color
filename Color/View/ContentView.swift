@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var vm = MainViewModel()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        GeometryReader { canvas in
+            
         }
-        .padding()
+        .background(Color.blue)
+        
     }
 }
 
