@@ -124,12 +124,18 @@ struct OklchColor: Decodable, Hashable {
         return (r, g, b)
     }
     
-    var displayP3: Color {
-        let components = displayP3Components
-        return Color(Color.RGBColorSpace.displayP3,
-                     red: components.red,
-                     green: components.green,
-                     blue: components.blue)
+    var displayP3: Color? {
+        let red = displayP3Components.red
+        let green = displayP3Components.green
+        let blue = displayP3Components.blue
+        if red >= 0.0 && red <= 1.0 && green >= 0.0 && green <= 1.0 && blue >= 0.0 && blue <= 1.0 {
+            return Color(Color.RGBColorSpace.displayP3,
+                         red: red,
+                         green: green,
+                         blue: blue)
+        } else {
+            return nil
+        }
     }
     
     var a: CGFloat {
