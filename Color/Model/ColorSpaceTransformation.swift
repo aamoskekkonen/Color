@@ -30,6 +30,14 @@ class ColorSpaceTransformation {
     
     static let labToNonLinearLms = ColorSpaceTransformation(nonLinearLmsToLab.matrix.inverse().data)
     
+    static let XYZToSRGB = ColorSpaceTransformation([
+        [3.2406, -1.5372, -0.4986],
+        [-0.9689, 1.8758, 0.0415],
+        [0.0557, -0.2040, 1.0570]
+    ])
+    
+    static let sRGBToXYZ = ColorSpaceTransformation(XYZToSRGB.matrix.inverse().data)
+    
     static let XYZToDisplayP3 = ColorSpaceTransformation([
         [2.493496911941425, -0.9313836179191239, -0.40271078445071684],
         [-0.8294889695615747, 1.7626640603183463, 0.023624685841943577],
