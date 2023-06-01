@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var vm = MainViewModel()
+    
     var body: some View {
         GeometryReader { bounds in
             VStack {

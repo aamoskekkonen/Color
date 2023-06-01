@@ -40,6 +40,16 @@ struct OklchColor: Decodable, Hashable {
 
         return firstLetter + secondLetter + thirdLetter
     }
+    
+    var representativeLightness: Int {
+        let lightnessId = representativeId.prefix(1)
+        assert("0123456789A".contains(lightnessId))
+        if lightnessId == "A" {
+            return 10
+        } else {
+            return Int(lightnessId)!
+        }
+    }
 
     init(name: String? = nil, l: CGFloat, c: CGFloat, h: CGFloat) {
         self.name = name

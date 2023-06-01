@@ -14,6 +14,7 @@ class CanvasViewModel: ObservableObject {
     @Published var currentCanvasWidth: CGFloat
     @Published var data: [ColorRepresentationData]
     @Published var selectedColors: [OklchColor]
+    @Published var layer: Int
     
     let defaultPointDiameter: CGFloat
     
@@ -58,6 +59,7 @@ class CanvasViewModel: ObservableObject {
         }
         self.defaultPointDiameter = initialPointDiameter
         self.selectedColors = []
+        self.layer = 5
     }
     
     func toggleSelect(color: OklchColor) {
