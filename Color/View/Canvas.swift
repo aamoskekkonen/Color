@@ -41,7 +41,7 @@ struct Canvas: View {
                         let diameter = colorRepresentationData.diameter
                         ZStack {
                             Circle()
-                                .foregroundColor(color.displayP3)
+                                .foregroundColor(color.displayP3 ?? .black)
                                 .frame(width: diameter, height: diameter)
                                 .position(point)
                                 .onTapGesture {

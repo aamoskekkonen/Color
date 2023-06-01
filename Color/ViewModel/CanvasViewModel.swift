@@ -21,11 +21,17 @@ class CanvasViewModel: ObservableObject {
     static var referenceColors: [OklchColor] {
         var colors: [OklchColor] = []
         for l in stride(from: 0.0, through: 1.0, by: 0.1) {
+            var neutralAdded = false
             for c in stride(from: 0.0, through: OklchColor.maxA, by: 0.1) {
-                for h in stride(from: 0, through: 350, by: 10) {
-                
+                for h in stride(from: 0.0, through: 350.0, by: 10.0) {
                     let color = OklchColor(l: l, c: c, h: CGFloat(h))
-                    colors.append(color)
+                    if c == 0.0 && h == 0 {
+                        colors.append(color)
+                        neutralAdded = true
+                    }
+                    if !(c == 0.0 && neutralAdded) {
+                        colors.append(color)
+                    }
                 }
             }
         }

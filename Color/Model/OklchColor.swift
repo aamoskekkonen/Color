@@ -162,7 +162,7 @@ struct OklchColor: Decodable, Hashable {
         let red = displayP3Components.red
         let green = displayP3Components.green
         let blue = displayP3Components.blue
-        if red >= 0.0 && red <= 1.0 && green >= 0.0 && green <= 1.0 && blue >= 0.0 && blue <= 1.0 {
+        if red >= -0.1 && red <= 1.1 && green >= -0.1 && green <= 1.1 && blue >= -0.1 && blue <= 1.1 {
             return Color(Color.RGBColorSpace.displayP3,
                          red: red,
                          green: green,
