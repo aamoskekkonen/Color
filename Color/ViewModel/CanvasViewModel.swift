@@ -17,19 +17,19 @@ class CanvasViewModel: ObservableObject {
     
     let defaultPointDiameter: CGFloat
     
-//    var referenceColors: [OklchColor] {
-//        var colors: [OklchColor] = []
-//        for l in stride(from: 0.0, through: 1.0, by: 0.1) {
-//            for c in stride(from: 0.0, through: OklchColor.maxA, by: 0.1) {
-//                for h in stride(from: 0, through: 350, by: 10) {
-//
-//                    let color = OklchColor(name: "Color", l: l, c: c, h: CGFloat(h))
-//                    colors.append(color)
-//                }
-//            }
-//        }
-//        return colors
-//    }
+    var referenceColors: [OklchColor] {
+        var colors: [OklchColor] = []
+        for l in stride(from: 0.0, through: 1.0, by: 0.1) {
+            for c in stride(from: 0.0, through: OklchColor.maxA, by: 0.1) {
+                for h in stride(from: 0, through: 350, by: 10) {
+                
+                    let color = OklchColor(l: l, c: c, h: CGFloat(h))
+                    colors.append(color)
+                }
+            }
+        }
+        return colors
+    }
     
     
     var origo: CGPoint {

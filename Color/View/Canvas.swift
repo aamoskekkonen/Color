@@ -41,7 +41,8 @@ struct Canvas: View {
                             vm.toggleSelect(color: colorRepresentationData.color)
                         }
                     if vm.hasSelected(color: colorRepresentationData.color) {
-                        Text(colorRepresentationData.color.name)
+                        let label = colorRepresentationData.color.name ?? colorRepresentationData.color.representativeId
+                        Text(label)
                             .font(.system(size: 11))
                             .position(point)
                             .offset(y: 10.0)

@@ -10,12 +10,12 @@ import CoreGraphics
 import SwiftUI
 
 struct OklchColor: Decodable, Hashable {
-    let name: String
+    let name: String?
     let l: CGFloat
     let c: CGFloat
     let h: CGFloat
     
-    private func representative(l: CGFloat, c: CGFloat, h: CGFloat) -> OklchColor {
+    private var representative: OklchColor {
         let roundedL = (l * 10).rounded() / 10
         let roundedC = (c * 10).rounded() / 10
         var roundedH = (h / 10).rounded() * 10
@@ -33,7 +33,7 @@ struct OklchColor: Decodable, Hashable {
         return character
     }
     
-    func representativeId(l: CGFloat, c: CGFloat, h: CGFloat) -> String {
+    var representativeId: String {
         let firstLetter = String(format: "%X", Int(l * 10))
         let secondLetter = String(format: "%X", Int(c * 10))
         let thirdLetter = String(convertToBase36(Int(h / 10)))
@@ -41,14 +41,14 @@ struct OklchColor: Decodable, Hashable {
         return firstLetter + secondLetter + thirdLetter
     }
 
-    init(name: String, l: CGFloat, c: CGFloat, h: CGFloat) {
+    init(name: String? = nil, l: CGFloat, c: CGFloat, h: CGFloat) {
         self.name = name
         self.l = l
         self.c = c
         self.h = h
     }
     
-    init(name: String, x: CGFloat, y: CGFloat, z: CGFloat) {
+    init(name: String? = nil, x: CGFloat, y: CGFloat, z: CGFloat) {
         self.name = name
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
@@ -63,7 +63,7 @@ struct OklchColor: Decodable, Hashable {
         self.h = radianH >= 0 ? (radianH / CGFloat.pi) * 180 : (radianH / CGFloat.pi) * 180 + 360
     }
     
-    init(name: String, xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
+    init(name: String? = nil, xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
         let x = (xChromaticity * luminance) / yChromaticity
         let y = luminance
         let z = (1.0 - xChromaticity - yChromaticity) * (luminance / yChromaticity)
