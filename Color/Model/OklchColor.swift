@@ -15,6 +15,32 @@ struct OklchColor: Decodable, Hashable {
     let c: CGFloat
     let h: CGFloat
     
+    private func representative(l: CGFloat, c: CGFloat, h: CGFloat) -> OklchColor {
+        let roundedL = (l * 10).rounded() / 10
+        let roundedC = (c * 10).rounded() / 10
+        var roundedH = (h / 10).rounded() * 10
+        if roundedH == 360 {
+            roundedH = 0
+        }
+        
+        return OklchColor(name: "Color", l: roundedL, c: roundedC, h: roundedH)
+    }
+    
+    private func convertToBase36(_ number: Int) -> Character {
+        let base36Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let index = number % base36Letters.count
+        let character = base36Letters[base36Letters.index(base36Letters.startIndex, offsetBy: index)]
+        return character
+    }
+    
+    func representativeId(l: CGFloat, c: CGFloat, h: CGFloat) -> String {
+        let firstLetter = String(format: "%X", Int(l * 10))
+        let secondLetter = String(format: "%X", Int(c * 10))
+        let thirdLetter = String(convertToBase36(Int(h / 10)))
+
+        return firstLetter + secondLetter + thirdLetter
+    }
+
     init(name: String, l: CGFloat, c: CGFloat, h: CGFloat) {
         self.name = name
         self.l = l
