@@ -23,9 +23,6 @@ final class CanvasViewModelTests: XCTestCase {
         let colorRepresentation = vm.data.first!
         let x = colorRepresentation.point.x
         let y = colorRepresentation.point.y
-        print((colorRepresentation.color.a, colorRepresentation.color.b))
-        print((x, y))
-        /// complete later
     }
 
 }

@@ -59,5 +59,5 @@ final class OklchColorTests: XCTestCase {
         XCTAssertEqual(color5.h, 0.000, accuracy: 3e+2)
     }
 
-
+    
 }

@@ -45,7 +45,7 @@ struct OklchColor: Decodable, Hashable {
     }
     
     private var hInRadians: CGFloat {
-        return ((h - 180) / 180) * CGFloat.pi
+        return (h / 360) * 2 * CGFloat.pi
     }
     
     private var lab: Matrix {
