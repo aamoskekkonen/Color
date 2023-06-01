@@ -138,7 +138,6 @@ struct OklchColor: Decodable, Hashable {
 extension OklchColor {
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
         hasher.combine(l)
         hasher.combine(c)
         hasher.combine(h)
