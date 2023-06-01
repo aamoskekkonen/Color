@@ -15,7 +15,7 @@ struct OklchColor: Decodable, Hashable {
     let c: CGFloat
     let h: CGFloat
     
-    private var representative: OklchColor {
+    var representative: OklchColor {
         let roundedL = (l * 10).rounded() / 10
         let roundedC = (c * 10).rounded() / 10
         var roundedH = (h / 10).rounded() * 10
@@ -100,7 +100,9 @@ struct OklchColor: Decodable, Hashable {
         return ColorSpaceTransformation.LmsToXYZ.matrix * lms
     }
     
-    var displayP3: Color {
+    
+    
+    var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         func gammaCorrect(_ value: CGFloat) -> CGFloat {
             if value <= 0.0031308 {
                 return 12.92 * value
@@ -119,7 +121,15 @@ struct OklchColor: Decodable, Hashable {
         let b = gammaCorrect(linearB)
         print("\(name ?? representativeId) in Display P3 is (\(r), \(g), \(b))")
 
-        return Color(.displayP3, red: r, green: g, blue: b, opacity: 1.0)
+        return (r, g, b)
+    }
+    
+    var displayP3: Color {
+        let components = displayP3Components
+        return Color(Color.RGBColorSpace.displayP3,
+                     red: components.red,
+                     green: components.green,
+                     blue: components.blue)
     }
     
     var a: CGFloat {
