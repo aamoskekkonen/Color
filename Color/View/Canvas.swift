@@ -16,7 +16,7 @@ struct Canvas: View {
         let myColors = try! FileReader.readColors()
         let referenceColors = CanvasViewModel.referenceColors
         self.vm = CanvasViewModel(
-            colors: referenceColors,
+            colors: myColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }

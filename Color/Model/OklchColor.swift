@@ -117,6 +117,7 @@ struct OklchColor: Decodable, Hashable {
         let r = gammaCorrect(linearR)
         let g = gammaCorrect(linearG)
         let b = gammaCorrect(linearB)
+        print("\(name ?? representativeId) in Display P3 is (\(r), \(g), \(b))")
 
         return Color(.displayP3, red: r, green: g, blue: b, opacity: 1.0)
     }

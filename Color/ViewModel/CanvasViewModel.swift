@@ -42,15 +42,15 @@ class CanvasViewModel: ObservableObject {
         self.defaultCanvasWidth = initialCanvasWidth
         self.currentCanvasWidth = initialCanvasWidth
         self.data = colors.map { color in
-            print("The color is \(color.name): (l = \(color.l), a = \(color.a), b = \(color.b), c = \(color.c), h = \(color.h)")
+            //print("The color is \(color.name): (l = \(color.l), a = \(color.a), b = \(color.b), c = \(color.c), h = \(color.h)")
             let radius = initialCanvasWidth / 2
             let aRatio = color.a / OklchColor.maxA
             let bRatio = color.b / OklchColor.maxB
-            print("aRatio = \(aRatio), bRatio = \(bRatio)")
+            //print("aRatio = \(aRatio), bRatio = \(bRatio)")
             let x = radius + aRatio * radius
             let y = radius - bRatio * radius
-            print("(x,y) = \((x, y))")
-            print("")
+            //print("(x,y) = \((x, y))")
+            //print("")
             return ColorRepresentationData(
                 color: color,
                 point: CGPoint(x: x, y: y),
