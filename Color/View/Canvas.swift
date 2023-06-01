@@ -11,8 +11,10 @@ struct Canvas: View {
     @ObservedObject var vm: CanvasViewModel
 
     init(defaultWidth: CGFloat) {
+        let myColors = try! FileReader.readColors()
+        let referenceColors = CanvasViewModel.referenceColors
         self.vm = CanvasViewModel(
-            colors: try! FileReader.readColors(),
+            colors: referenceColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }

@@ -17,7 +17,7 @@ class CanvasViewModel: ObservableObject {
     
     let defaultPointDiameter: CGFloat
     
-    var referenceColors: [OklchColor] {
+    static var referenceColors: [OklchColor] {
         var colors: [OklchColor] = []
         for l in stride(from: 0.0, through: 1.0, by: 0.1) {
             for c in stride(from: 0.0, through: OklchColor.maxA, by: 0.1) {
@@ -30,6 +30,7 @@ class CanvasViewModel: ObservableObject {
         }
         return colors
     }
+    
     
     
     var origo: CGPoint {
