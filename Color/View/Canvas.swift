@@ -37,13 +37,15 @@ struct Canvas: View {
                         .foregroundColor(color.displayP3)
                         .frame(width: diameter, height: diameter)
                         .position(point)
-                    Text(colorRepresentationData.color.name)
-                        .font(.system(size: 11))
-                        .position(point)
-                        .offset(y: 10.0)
-                }
-                .onTapGesture {
-                    colorRepresentationData.select()
+                        .onTapGesture {
+                            vm.toggleSelect(color: colorRepresentationData.color)
+                        }
+                    if vm.hasSelected(color: colorRepresentationData.color) {
+                        Text(colorRepresentationData.color.name)
+                            .font(.system(size: 11))
+                            .position(point)
+                            .offset(y: 10.0)
+                    }
                 }
                 
             }

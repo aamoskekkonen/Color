@@ -13,6 +13,7 @@ class CanvasViewModel: ObservableObject {
     let defaultCanvasWidth: CGFloat
     @Published var currentCanvasWidth: CGFloat
     @Published var data: [ColorRepresentationData]
+    @Published var selectedColors: [OklchColor]
     
     let defaultPointDiameter: CGFloat
     
@@ -40,25 +41,26 @@ class CanvasViewModel: ObservableObject {
                 isSelected: false)
         }
         self.defaultPointDiameter = initialPointDiameter
+        self.selectedColors = []
     }
     
+    func toggleSelect(color: OklchColor) {
+        if let index = selectedColors.firstIndex(of: color) {
+            selectedColors.remove(at: index)
+        } else {
+            selectedColors.append(color)
+        }
+    }
+    
+    func hasSelected(color: OklchColor) -> Bool {
+        return selectedColors.contains(color)
+    }
 }
 
-class ColorRepresentationData: Identifiable {
+struct ColorRepresentationData: Identifiable {
     let id = UUID()
     let color: OklchColor
     let point: CGPoint
     let diameter: CGFloat
     var isSelected: Bool
-    
-    init(color: OklchColor, point: CGPoint, diameter: CGFloat, isSelected: Bool) {
-        self.color = color
-        self.point = point
-        self.diameter = diameter
-        self.isSelected = isSelected
-    }
-    
-    func select() {
-        isSelected = true
-    }
 }
