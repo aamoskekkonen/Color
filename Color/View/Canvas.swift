@@ -71,6 +71,16 @@ struct Canvas: View {
                         }
                 .padding()
                 .frame(maxWidth: 200)
+            VStack {
+                Rectangle()
+                    .frame(width: 50.0, height: 50.0)
+                    .foregroundColor(vm.lastClickedColor?.displayP3 ?? .black)
+                Text("lightness = \(vm.lastClickedColor?.l ?? 0)")
+                Text("chromaticity = \(vm.lastClickedColor?.c ?? 0)")
+                Text("hue = \(vm.lastClickedColor?.h ?? 0)")
+                Text("a = \(vm.lastClickedColor?.a ?? 0)")
+                Text("b = \(vm.lastClickedColor?.b ?? 0)")
+            }
         }
     }
 }
