@@ -18,6 +18,8 @@ final class OklchColorTests: XCTestCase {
     var displayP3Red: OklchColor!
     var displayP3Green: OklchColor!
     var displayP3Blue: OklchColor!
+    var midEverything: OklchColor!
+    var aam: OklchColor!
 
     override func setUpWithError() throws {
         white = OklchColor(name: "White", x: 0.950, y: 1.000, z: 1.089)
@@ -29,6 +31,9 @@ final class OklchColorTests: XCTestCase {
         displayP3Red = OklchColor(name: "P3 Red", x: 0.680, y: 0.320, z: 0.265)
         displayP3Green = OklchColor(name: "P3 Green", x: 0.265, y: 0.690, z: 0.150)
         displayP3Blue = OklchColor(name: "P3 Blue", x: 0.150, y: 0.060, z: 0.790)
+        midEverything = OklchColor(id: "55I")
+        aam = OklchColor(id: "AAM")
+        
         super.setUp()
     }
 
@@ -42,6 +47,8 @@ final class OklchColorTests: XCTestCase {
         displayP3Red = nil
         displayP3Green = nil
         displayP3Blue = nil
+        midEverything = nil
+        aam = nil
         super.tearDown()
     }
     
@@ -66,6 +73,14 @@ final class OklchColorTests: XCTestCase {
         XCTAssertEqual(d65.l, 1.000, accuracy: 1e-3)
         XCTAssertEqual(d65.c, 0.000, accuracy: 1e-3)
         XCTAssertEqual(d65.h, 0.000, accuracy: 3e+2)
+        
+        XCTAssertEqual(midEverything.l, 0.5)
+        XCTAssertEqual(midEverything.c, 0.5)
+        XCTAssertEqual(midEverything.h, 180)
+        
+        XCTAssertEqual(aam.l, 1.0)
+        XCTAssertEqual(aam.c, 1.0)
+        XCTAssertEqual(aam.h, 220)
     }
 
     func testDisplayP3() throws {
