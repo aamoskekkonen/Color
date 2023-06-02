@@ -58,6 +58,35 @@ struct OklchColor: Decodable, Hashable {
         self.h = h
     }
     
+    init(id: String) {
+        let first = id.first!
+        let second = id.dropFirst().first!
+        let third = id.dropFirst(2).first!
+        
+        let base36Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        
+        let indexOfA = base36Letters.firstIndex(of: "A")!
+        let firstEleven = base36Letters[...indexOfA]
+        
+        assert(id.count == 3, "The id must be 3 characters long.")
+        assert(firstEleven.contains(first) && firstEleven.contains(second) && base36Letters.contains(third))
+        
+        let lIndex = base36Letters.firstIndex(of: first)!
+        let cIndex = base36Letters.firstIndex(of: second)!
+        let hIndex = base36Letters.firstIndex(of: third)!
+        
+        let lIntIndex: Int = base36Letters.distance(from: base36Letters.startIndex, to: lIndex)
+        let cIntIndex: Int = base36Letters.distance(from: base36Letters.startIndex, to: cIndex)
+        let hIntIndex: Int = base36Letters.distance(from: base36Letters.startIndex, to: hIndex)
+        
+        let l = CGFloat(lIntIndex) / 10
+        let c = CGFloat(cIntIndex) / 10
+        let h = CGFloat(hIntIndex) * 10
+        
+        self.init(l: l, c: c, h: h)
+    }
+
+    
     init(name: String? = nil, x: CGFloat, y: CGFloat, z: CGFloat) {
         self.name = name
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
