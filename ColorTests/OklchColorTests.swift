@@ -69,37 +69,37 @@ final class OklchColorTests: XCTestCase {
     }
 
     func testDisplayP3() throws {
-        let d65_red = d65.representative.displayP3!.cgColor!.components![0]
-        let d65_green = d65.representative.displayP3!.cgColor!.components![1]
-        let d65_blue = d65.representative.displayP3!.cgColor!.components![2]
+        let d65_red = d65.representative.displayP3Components.red
+        let d65_green = d65.representative.displayP3Components.green
+        let d65_blue = d65.representative.displayP3Components.blue
         XCTAssertEqual(d65_red, 1.0, accuracy: 1e-5)
         XCTAssertEqual(d65_green, 1.0, accuracy: 1e-5)
         XCTAssertEqual(d65_blue, 1.0, accuracy: 1e-5)
         
-        let sRGBRed_red =   sRGBRed.representative.displayP3!.cgColor!.components![0]
-        let sRGBRed_green = sRGBRed.representative.displayP3!.cgColor!.components![1]
-        let sRGBRed_blue =  sRGBRed.representative.displayP3!.cgColor!.components![2]
+        let sRGBRed_red =   sRGBRed.representative.displayP3Components.red
+        let sRGBRed_green = sRGBRed.representative.displayP3Components.green
+        let sRGBRed_blue =  sRGBRed.representative.displayP3Components.blue
         XCTAssertEqual(sRGBRed_red, 0.4886, accuracy: 1e-5)
         XCTAssertEqual(sRGBRed_green, 0.2200, accuracy: 1e-5)
         XCTAssertEqual(sRGBRed_blue, 0.1789, accuracy: 1e-5)
         
-        let displayP3Red_red = displayP3Red.representative.displayP3!.cgColor!.components![0]
-        let displayP3Red_green = displayP3Red.representative.displayP3!.cgColor!.components![1]
-        let displayP3Red_blue = displayP3Red.representative.displayP3!.cgColor!.components![2]
+        let displayP3Red_red = displayP3Red.representative.displayP3Components.red
+        let displayP3Red_green = displayP3Red.representative.displayP3Components.green
+        let displayP3Red_blue = displayP3Red.representative.displayP3Components.blue
         XCTAssertEqual(displayP3Red_red, 1.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Red_green, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Red_blue, 0.0, accuracy: 1e-5)
         
-        let displayP3Green_red = displayP3Green.representative.displayP3!.cgColor!.components![0]
-        let displayP3Green_green = displayP3Green.representative.displayP3!.cgColor!.components![1]
-        let displayP3Green_blue = displayP3Green.representative.displayP3!.cgColor!.components![2]
+        let displayP3Green_red = displayP3Green.representative.displayP3Components.red
+        let displayP3Green_green = displayP3Green.representative.displayP3Components.green
+        let displayP3Green_blue = displayP3Green.representative.displayP3Components.blue
         XCTAssertEqual(displayP3Green_red, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Green_green, 1.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Green_blue, 0.0, accuracy: 1e-5)
         
-        let displayP3Blue_red = displayP3Blue.representative.displayP3!.cgColor!.components![0]
-        let displayP3Blue_green = displayP3Blue.representative.displayP3!.cgColor!.components![1]
-        let displayP3Blue_blue = displayP3Blue.representative.displayP3!.cgColor!.components![2]
+        let displayP3Blue_red = displayP3Blue.representative.displayP3Components.red
+        let displayP3Blue_green = displayP3Blue.representative.displayP3Components.green
+        let displayP3Blue_blue = displayP3Blue.representative.displayP3Components.blue
         XCTAssertEqual(displayP3Blue_red, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Blue_green, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Blue_blue, 1.0, accuracy: 1e-5)
