@@ -20,7 +20,7 @@ class ColorSpaceTransformation {
         [0.0482003018, 0.2643662691, 0.6338517070]
     ])
     
-    static let LmsToXYZ = ColorSpaceTransformation(XYZToLms.matrix.inverse().data)
+    static let lmsToXYZ = ColorSpaceTransformation(XYZToLms.matrix.inverse().data)
     
     static let nonLinearLmsToOklab = ColorSpaceTransformation([
         [0.2104542553, 0.7936177850, -0.0040720468],

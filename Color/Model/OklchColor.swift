@@ -91,11 +91,11 @@ struct OklchColor: Decodable, Hashable {
         self.name = name
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
-        let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
+        let oklab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
                                   
-        self.l = lab[0, 0]
-        let a = lab[1, 0]
-        let b = lab[2, 0]
+        self.l = oklab[0, 0]
+        let a = oklab[1, 0]
+        let b = oklab[2, 0]
                                   
         self.c = sqrt(pow(a, 2) + pow(b, 2))
         let radianH = atan2(b, a)
@@ -119,6 +119,7 @@ struct OklchColor: Decodable, Hashable {
     
     private var lms: Matrix {
         let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
+        print("nonLinearLms: \(nonLinearLms)")
         let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                         pow(nonLinearLms[1, 0], 3),
                                         pow(nonLinearLms[2, 0], 3)))
@@ -126,7 +127,7 @@ struct OklchColor: Decodable, Hashable {
     }
     
     private var xyz: Matrix {
-        return ColorSpaceTransformation.LmsToXYZ.matrix * lms
+        return ColorSpaceTransformation.lmsToXYZ.matrix * lms
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
