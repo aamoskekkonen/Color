@@ -16,7 +16,7 @@ struct OklchColor: Decodable, Hashable {
     let h: CGFloat
     
     var representative: OklchColor {
-        let roundedL = (l * 10).rounded() / 10
+        let roundedL = (l / 10).rounded() * 10
         let roundedC = (c * 10).rounded() / 10
         var roundedH = (h / 10).rounded() * 10
         if roundedH == 360 {
@@ -34,7 +34,7 @@ struct OklchColor: Decodable, Hashable {
     }
     
     var representativeId: String {
-        let firstLetter = String(format: "%X", Int(l * 10))
+        let firstLetter = String(format: "%X", Int(l / 10))
         let secondLetter = String(format: "%X", Int(c * 10))
         let thirdLetter = String(convertToBase36(Int(h / 10)))
 
@@ -79,7 +79,7 @@ struct OklchColor: Decodable, Hashable {
         let cIntIndex: Int = base36Letters.distance(from: base36Letters.startIndex, to: cIndex)
         let hIntIndex: Int = base36Letters.distance(from: base36Letters.startIndex, to: hIndex)
         
-        let l = CGFloat(lIntIndex) / 10
+        let l = CGFloat(lIntIndex) * 10
         let c = CGFloat(cIntIndex) / 10
         let h = CGFloat(hIntIndex) * 10
         
