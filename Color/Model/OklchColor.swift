@@ -91,7 +91,7 @@ struct OklchColor: Decodable, Hashable {
         self.name = name
         let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
-        let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToLab.matrix * nonLinearLms
+        let lab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
                                   
         self.l = lab[0, 0]
         let a = lab[1, 0]
@@ -113,12 +113,12 @@ struct OklchColor: Decodable, Hashable {
         return (h / 360) * 2 * CGFloat.pi
     }
     
-    private var lab: Matrix {
+    private var oklab: Matrix {
         return Matrix(column: (l, c * cos(hInRadians), c * sin(hInRadians)))
     }
     
     private var lms: Matrix {
-        let nonLinearLms = ColorSpaceTransformation.labToNonLinearLms.matrix * lab
+        let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
         let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                         pow(nonLinearLms[1, 0], 3),
                                         pow(nonLinearLms[2, 0], 3)))
@@ -137,7 +137,9 @@ struct OklchColor: Decodable, Hashable {
                 return 1.055 * pow(value, 1/2.4) - 0.055
             }
         }
-        print(self.xyz)
+        print("oklab: \(self.oklab)")
+        print("lms: \(self.lms)")
+        print("xyz: \(self.xyz)")
         
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         let linearR = displayP3Matrix[0, 0]
@@ -167,11 +169,11 @@ struct OklchColor: Decodable, Hashable {
     }
     
     var a: CGFloat {
-        return lab[1,0]
+        return oklab[1,0]
     }
     
     var b: CGFloat {
-        return lab[2,0]
+        return oklab[2,0]
     }
     
     static let maxA: CGFloat = 1.0
