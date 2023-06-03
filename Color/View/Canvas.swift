@@ -14,9 +14,9 @@ struct Canvas: View {
 
     init(defaultWidth: CGFloat) {
         let myColors = try! FileReader.readColors()
-        let referenceColors = CanvasViewModel.referenceColors
+        let referenceColors = CanvasViewModel.referenceColors + [OklchColor(name: "P3 Red", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265), OklchColor(name: "P3 Green", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265), OklchColor(name: "P3 Blue", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265)]
         self.vm = CanvasViewModel(
-            colors: referenceColors,
+            colors: referenceColors + myColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }
@@ -41,7 +41,7 @@ struct Canvas: View {
                         let diameter = colorRepresentationData.diameter
                         ZStack {
                             Circle()
-                                .foregroundColor(color.displayP3 ?? .black.opacity(0))
+                                .foregroundColor(color.displayP3 ?? .black)
                                 .frame(width: diameter, height: diameter)
                                 .position(point)
                                 .onTapGesture {

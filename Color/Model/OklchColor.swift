@@ -34,9 +34,9 @@ struct OklchColor: Decodable, Hashable {
     }
     
     var representativeId: String {
-        let firstLetter = String(format: "%X", Int(l / 10))
-        let secondLetter = String(format: "%X", Int(c * 10))
-        let thirdLetter = String(convertToBase36(Int(h / 10)))
+        let firstLetter = String(format: "%X", Int((l / 10).rounded()))
+        let secondLetter = String(format: "%X", Int((c * 10).rounded()))
+        let thirdLetter = String(convertToBase36(Int((h / 10).rounded())))
 
         return firstLetter + secondLetter + thirdLetter
     }
@@ -119,8 +119,6 @@ struct OklchColor: Decodable, Hashable {
     
     private var lms: Matrix {
         let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
-        print("Multiplying \(ColorSpaceTransformation.oklabToNonLinearLms.matrix) with \(oklab) yielding \(nonLinearLms)")
-        print("Raising \((nonLinearLms[0, 0], nonLinearLms[1, 0], nonLinearLms[2, 0])) to 3rd power yielding \((pow(nonLinearLms[0, 0], 3), pow(nonLinearLms[1, 0], 3), pow(nonLinearLms[2, 0], 3)))")
         let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                         pow(nonLinearLms[1, 0], 3),
                                         pow(nonLinearLms[2, 0], 3)))
@@ -139,9 +137,6 @@ struct OklchColor: Decodable, Hashable {
                 return 1.055 * pow(value, 1/2.4) - 0.055
             }
         }
-        print("oklab: \(self.oklab)")
-        print("lms: \(self.lms)")
-        print("xyz: \(self.xyz)")
         
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         let linearR = displayP3Matrix[0, 0]
@@ -151,7 +146,6 @@ struct OklchColor: Decodable, Hashable {
         let r = gammaCorrect(linearR)
         let g = gammaCorrect(linearG)
         let b = gammaCorrect(linearB)
-        print("\(name ?? representativeId) in Display P3 is (\(r), \(g), \(b))")
 
         return (r, g, b)
     }
