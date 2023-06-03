@@ -28,9 +28,11 @@ final class OklchColorTests: XCTestCase {
         pitchBlackCyan = OklchColor(name: "Pitch Black Cyan", x: 0.000, y: 0.000, z: 1.000)
         d65 = OklchColor(name: "D65", xChromaticity: 0.3127, yChromaticity: 0.3290, luminance: 1.0000)
         sRGBRed = OklchColor(name: "sRGB Red", x: 0.6400, y: 0.3300, z: 0.2126)
+        
         displayP3Red = OklchColor(name: "P3 Red", x: 0.680, y: 0.320, z: 0.265)
         displayP3Green = OklchColor(name: "P3 Green", x: 0.265, y: 0.690, z: 0.150)
         displayP3Blue = OklchColor(name: "P3 Blue", x: 0.150, y: 0.060, z: 0.790)
+        
         midEverything = OklchColor(id: "55I")
         aam = OklchColor(id: "AAM")
         
@@ -84,37 +86,37 @@ final class OklchColorTests: XCTestCase {
     }
 
     func testDisplayP3() throws {
-        let d65_red = d65.representative.displayP3Components.red
-        let d65_green = d65.representative.displayP3Components.green
-        let d65_blue = d65.representative.displayP3Components.blue
+        let d65_red = d65.representative.sRGBComponents.red
+        let d65_green = d65.representative.sRGBComponents.green
+        let d65_blue = d65.representative.sRGBComponents.blue
         XCTAssertEqual(d65_red, 1.0, accuracy: 1e-5)
         XCTAssertEqual(d65_green, 1.0, accuracy: 1e-5)
         XCTAssertEqual(d65_blue, 1.0, accuracy: 1e-5)
         
-        let sRGBRed_red =   sRGBRed.representative.displayP3Components.red
-        let sRGBRed_green = sRGBRed.representative.displayP3Components.green
-        let sRGBRed_blue =  sRGBRed.representative.displayP3Components.blue
+        let sRGBRed_red =   sRGBRed.representative.sRGBComponents.red
+        let sRGBRed_green = sRGBRed.representative.sRGBComponents.green
+        let sRGBRed_blue =  sRGBRed.representative.sRGBComponents.blue
         XCTAssertEqual(sRGBRed_red, 0.4886, accuracy: 1e-5)
         XCTAssertEqual(sRGBRed_green, 0.2200, accuracy: 1e-5)
         XCTAssertEqual(sRGBRed_blue, 0.1789, accuracy: 1e-5)
         
-        let displayP3Red_red = displayP3Red.representative.displayP3Components.red
-        let displayP3Red_green = displayP3Red.representative.displayP3Components.green
-        let displayP3Red_blue = displayP3Red.representative.displayP3Components.blue
+        let displayP3Red_red = displayP3Red.representative.sRGBComponents.red
+        let displayP3Red_green = displayP3Red.representative.sRGBComponents.green
+        let displayP3Red_blue = displayP3Red.representative.sRGBComponents.blue
         XCTAssertEqual(displayP3Red_red, 1.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Red_green, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Red_blue, 0.0, accuracy: 1e-5)
         
-        let displayP3Green_red = displayP3Green.representative.displayP3Components.red
-        let displayP3Green_green = displayP3Green.representative.displayP3Components.green
-        let displayP3Green_blue = displayP3Green.representative.displayP3Components.blue
+        let displayP3Green_red = displayP3Green.representative.sRGBComponents.red
+        let displayP3Green_green = displayP3Green.representative.sRGBComponents.green
+        let displayP3Green_blue = displayP3Green.representative.sRGBComponents.blue
         XCTAssertEqual(displayP3Green_red, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Green_green, 1.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Green_blue, 0.0, accuracy: 1e-5)
         
-        let displayP3Blue_red = displayP3Blue.representative.displayP3Components.red
-        let displayP3Blue_green = displayP3Blue.representative.displayP3Components.green
-        let displayP3Blue_blue = displayP3Blue.representative.displayP3Components.blue
+        let displayP3Blue_red = displayP3Blue.representative.sRGBComponents.red
+        let displayP3Blue_green = displayP3Blue.representative.sRGBComponents.green
+        let displayP3Blue_blue = displayP3Blue.representative.sRGBComponents.blue
         XCTAssertEqual(displayP3Blue_red, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Blue_green, 0.0, accuracy: 1e-5)
         XCTAssertEqual(displayP3Blue_blue, 1.0, accuracy: 1e-5)

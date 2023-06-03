@@ -14,7 +14,10 @@ struct Canvas: View {
 
     init(defaultWidth: CGFloat) {
         let myColors = try! FileReader.readColors()
-        let referenceColors = CanvasViewModel.referenceColors + [OklchColor(name: "P3 Red", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265), OklchColor(name: "P3 Green", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265), OklchColor(name: "P3 Blue", xChromaticity: 0.680, yChromaticity: 0.320, luminance: 0.265)]
+        let referenceColors = CanvasViewModel.referenceColors + [
+            OklchColor(name: "P3 Red", xChromaticity: 0.6737, yChromaticity: 0.3263, luminance: 0.2388),
+            OklchColor(name: "P3 Green", xChromaticity: 0.2520, yChromaticity: 0.6927, luminance: 0.6938),
+            OklchColor(name: "P3 Blue", xChromaticity: 0.1563, yChromaticity: 0.0512, luminance: 0.0669)]
         self.vm = CanvasViewModel(
             colors: referenceColors + myColors,
             initialCanvasWidth: defaultWidth,
@@ -41,7 +44,7 @@ struct Canvas: View {
                         let diameter = colorRepresentationData.diameter
                         ZStack {
                             Circle()
-                                .foregroundColor(color.displayP3 ?? .black)
+                                .foregroundColor(color.sRGB)
                                 .frame(width: diameter, height: diameter)
                                 .position(point)
                                 .onTapGesture {
@@ -74,7 +77,8 @@ struct Canvas: View {
             VStack {
                 Rectangle()
                     .frame(width: 50.0, height: 50.0)
-                    .foregroundColor(vm.lastClickedColor?.displayP3 ?? .black)
+                    .foregroundColor(vm.lastClickedColor?.sRGB ?? .black)
+                Text(vm.lastClickedColor?.name ?? vm.lastClickedColor?.representativeId ?? "")
                 Text("lightness = \(vm.lastClickedColor?.l ?? 0)")
                 Text("chromaticity = \(vm.lastClickedColor?.c ?? 0)")
                 Text("hue = \(vm.lastClickedColor?.h ?? 0)")

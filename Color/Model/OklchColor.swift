@@ -129,7 +129,7 @@ struct OklchColor: Decodable, Hashable {
         return ColorSpaceTransformation.lmsToXYZ.matrix * lms
     }
     
-    var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
+    var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         func gammaCorrect(_ value: CGFloat) -> CGFloat {
             if value <= 0.0031308 {
                 return 12.92 * value
@@ -138,30 +138,24 @@ struct OklchColor: Decodable, Hashable {
             }
         }
         
-        let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
-        let linearR = displayP3Matrix[0, 0]
-        let linearG = displayP3Matrix[1, 0]
-        let linearB = displayP3Matrix[2, 0]
+        let sRGBMatrix = ColorSpaceTransformation.XYZToSRGB.matrix * self.xyz
+        let linearR = sRGBMatrix[0, 0]
+        let linearG = sRGBMatrix[1, 0]
+        let linearB = sRGBMatrix[2, 0]
 
-        let r = gammaCorrect(linearR)
-        let g = gammaCorrect(linearG)
-        let b = gammaCorrect(linearB)
+        let red = gammaCorrect(linearR)
+        let green = gammaCorrect(linearG)
+        let blue = gammaCorrect(linearB)
 
-        return (r, g, b)
+        return (red, green, blue)
     }
     
-    var displayP3: Color? {
-        let red = displayP3Components.red
-        let green = displayP3Components.green
-        let blue = displayP3Components.blue
-        if red >= -0.1 && red <= 1.1 && green >= -0.1 && green <= 1.1 && blue >= -0.1 && blue <= 1.1 {
-            return Color(Color.RGBColorSpace.displayP3,
-                         red: red,
-                         green: green,
-                         blue: blue)
-        } else {
-            return nil
-        }
+    var sRGB: Color {
+        let (red, green, blue) = sRGBComponents
+        print("\(name ?? representativeId) in sRGB is \((red, green, blue))")
+        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+        let color = CGColor(colorSpace: colorSpace, components: [red, green, blue, 1.0])!
+        return Color(cgColor: color)
     }
     
     var a: CGFloat {
