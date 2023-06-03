@@ -89,7 +89,7 @@ struct OklchColor: Decodable, Hashable {
     
     init(name: String? = nil, x: CGFloat, y: CGFloat, z: CGFloat) {
         self.name = name
-        let lms: Matrix = ColorSpaceTransformation.XYZToLms.matrix * Matrix(column: (x, y, z))
+        let lms: Matrix = ColorSpaceTransformation.xyzToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
         let oklab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
                                   
@@ -114,12 +114,13 @@ struct OklchColor: Decodable, Hashable {
     }
     
     private var oklab: Matrix {
-        return Matrix(column: (l, c * cos(hInRadians), c * sin(hInRadians)))
+        return Matrix(column: (l / 100, c * cos(hInRadians), c * sin(hInRadians)))
     }
     
     private var lms: Matrix {
         let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
-        print("nonLinearLms: \(nonLinearLms)")
+        print("Multiplying \(ColorSpaceTransformation.oklabToNonLinearLms.matrix) with \(oklab) yielding \(nonLinearLms)")
+        print("Raising \((nonLinearLms[0, 0], nonLinearLms[1, 0], nonLinearLms[2, 0])) to 3rd power yielding \((pow(nonLinearLms[0, 0], 3), pow(nonLinearLms[1, 0], 3), pow(nonLinearLms[2, 0], 3)))")
         let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                         pow(nonLinearLms[1, 0], 3),
                                         pow(nonLinearLms[2, 0], 3)))

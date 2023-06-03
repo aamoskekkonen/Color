@@ -14,13 +14,13 @@ class ColorSpaceTransformation {
         self.matrix = Matrix(data)
     }
     
-    static let XYZToLms = ColorSpaceTransformation([
+    static let xyzToLms = ColorSpaceTransformation([
         [0.8189330101, 0.3618667424, -0.1288597137],
         [0.0329845436, 0.9293118715, 0.0361456387],
         [0.0482003018, 0.2643662691, 0.6338517070]
     ])
     
-    static let lmsToXYZ = ColorSpaceTransformation(XYZToLms.matrix.inverse().data)
+    static let lmsToXYZ = ColorSpaceTransformation(xyzToLms.matrix.inverse().data)
     
     static let nonLinearLmsToOklab = ColorSpaceTransformation([
         [0.2104542553, 0.7936177850, -0.0040720468],
