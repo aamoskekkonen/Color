@@ -150,7 +150,7 @@ struct OklchColor: Decodable, Hashable {
         return (red, green, blue)
     }
     
-    var sRGB: Color {
+    var extendedSRGB: Color {
         let (red, green, blue) = sRGBComponents
         print("\(name ?? representativeId) in sRGB is \((red, green, blue))")
         let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
