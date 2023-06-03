@@ -54,31 +54,31 @@ final class OklchColorTests: XCTestCase {
     
 
     func testInit() throws {
-        XCTAssertEqual(white.l, 1.000, accuracy: 1e-4)
+        XCTAssertEqual(white.l, 100.0, accuracy: 1e-4)
         XCTAssertEqual(white.c, 0.000, accuracy: 1e-3)
         XCTAssertEqual(white.h, 0.000, accuracy: 3e+2)
         
-        XCTAssertEqual(darkBrownish.l, 0.450, accuracy: 1e-4)
+        XCTAssertEqual(darkBrownish.l, 45.0, accuracy: 1e-4)
         XCTAssertEqual(darkBrownish.c, 1.24, accuracy: 1e-2)
         XCTAssertEqual(darkBrownish.h, 359.12, accuracy: 1e-2)
         
-        XCTAssertEqual(babyGreenish.l, 0.922, accuracy: 1e-3)
+        XCTAssertEqual(babyGreenish.l, 92.2, accuracy: 1e-3)
         XCTAssertEqual(babyGreenish.c, 0.72, accuracy: 1e-2)
         XCTAssertEqual(babyGreenish.h, 158.57, accuracy: 1e-1)
         
-        XCTAssertEqual(pitchBlackCyan.l, 0.153, accuracy: 1e-3)
+        XCTAssertEqual(pitchBlackCyan.l, 15.3, accuracy: 1e-3)
         XCTAssertEqual(pitchBlackCyan.c, 1.489, accuracy: 1e-2)
         XCTAssertEqual(pitchBlackCyan.h, 197.55, accuracy: 1e-1)
         
-        XCTAssertEqual(d65.l, 1.000, accuracy: 1e-3)
+        XCTAssertEqual(d65.l, 100.0, accuracy: 1e-3)
         XCTAssertEqual(d65.c, 0.000, accuracy: 1e-3)
         XCTAssertEqual(d65.h, 0.000, accuracy: 3e+2)
         
-        XCTAssertEqual(midEverything.l, 0.5)
+        XCTAssertEqual(midEverything.l, 50.0)
         XCTAssertEqual(midEverything.c, 0.5)
         XCTAssertEqual(midEverything.h, 180)
         
-        XCTAssertEqual(aam.l, 1.0)
+        XCTAssertEqual(aam.l, 100.0)
         XCTAssertEqual(aam.c, 1.0)
         XCTAssertEqual(aam.h, 220)
     }
