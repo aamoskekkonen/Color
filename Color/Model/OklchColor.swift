@@ -93,7 +93,7 @@ struct OklchColor: Decodable, Hashable {
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
         let oklab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
                                   
-        self.l = oklab[0, 0]
+        self.l = oklab[0, 0] * 100
         let a = oklab[1, 0]
         let b = oklab[2, 0]
                                   
