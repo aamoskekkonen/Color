@@ -129,42 +129,6 @@ struct OklchColor: Decodable, Hashable {
         return ColorSpaceTransformation.LmsToXYZ.matrix * lms
     }
     
-    var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        func gammaCorrect(_ value: CGFloat) -> CGFloat {
-            if value <= 0.0031308 {
-                return 12.92 * value
-            } else {
-                return 1.055 * pow(value, 1/2.4) - 0.055
-            }
-        }
-        
-        let sRGBMatrix = ColorSpaceTransformation.XYZToSRGB.matrix * self.xyz
-        let linearR = sRGBMatrix[0, 0]
-        let linearG = sRGBMatrix[1, 0]
-        let linearB = sRGBMatrix[2, 0]
-
-        let r = gammaCorrect(linearR)
-        let g = gammaCorrect(linearG)
-        let b = gammaCorrect(linearB)
-        print("\(name ?? representativeId) in sRGB is (\(r), \(g), \(b))")
-
-        return (r, g, b)
-    }
-    
-    var sRGB: Color? {
-        let red = sRGBComponents.red
-        let green = sRGBComponents.green
-        let blue = sRGBComponents.blue
-        if red >= 0.0 && red <= 1.0 && green >= 0.0 && green <= 1.0 && blue >= 0.0 && blue <= 1.0 {
-            return Color(Color.RGBColorSpace.sRGB,
-                         red: red,
-                         green: green,
-                         blue: blue)
-        } else {
-            return nil
-        }
-    }
-    
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         func gammaCorrect(_ value: CGFloat) -> CGFloat {
             if value <= 0.0031308 {
@@ -173,6 +137,7 @@ struct OklchColor: Decodable, Hashable {
                 return 1.055 * pow(value, 1/2.4) - 0.055
             }
         }
+        print(self.xyz)
         
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         let linearR = displayP3Matrix[0, 0]
