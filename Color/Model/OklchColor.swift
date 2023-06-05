@@ -14,42 +14,6 @@ struct OklchColor: Decodable, Hashable {
     let l: CGFloat
     let c: CGFloat
     let h: CGFloat
-    
-    var representative: OklchColor {
-        let roundedL = (l / 10).rounded() * 10
-        let roundedC = (c * 10).rounded() / 10
-        var roundedH = (h / 10).rounded() * 10
-        if roundedH == 360 {
-            roundedH = 0
-        }
-        
-        return OklchColor(name: "Color", l: roundedL, c: roundedC, h: roundedH)
-    }
-    
-    private func convertToBase36(_ number: Int) -> Character {
-        let base36Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        let index = number % base36Letters.count
-        let character = base36Letters[base36Letters.index(base36Letters.startIndex, offsetBy: index)]
-        return character
-    }
-    
-    var representativeId: String {
-        let firstLetter = String(format: "%X", Int((l / 10).rounded()))
-        let secondLetter = String(format: "%X", Int((c * 10).rounded()))
-        let thirdLetter = String(convertToBase36(Int((h / 10).rounded())))
-
-        return firstLetter + secondLetter + thirdLetter
-    }
-    
-    var representativeLightness: Int {
-        let lightnessId = representativeId.prefix(1)
-        assert("0123456789A".contains(lightnessId))
-        if lightnessId == "A" {
-            return 10
-        } else {
-            return Int(lightnessId)!
-        }
-    }
 
     init(name: String? = nil, l: CGFloat, c: CGFloat, h: CGFloat) {
         self.name = name
@@ -130,66 +94,43 @@ struct OklchColor: Decodable, Hashable {
     }
     
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        func gammaCorrect(_ value: CGFloat) -> CGFloat {
-            if value <= 0.0031308 {
-                return 12.92 * value
-            } else {
-                return 1.055 * pow(value, 1/2.2) - 0.055
-            }
-        }
-        
         let sRGBMatrix = ColorSpaceTransformation.XYZToSRGB.matrix * self.xyz
         let linearR = sRGBMatrix[0, 0]
         let linearG = sRGBMatrix[1, 0]
         let linearB = sRGBMatrix[2, 0]
-
-        let red = gammaCorrect(linearR)
-        let green = gammaCorrect(linearG)
-        let blue = gammaCorrect(linearB)
-
-        return (red, green, blue)
+        return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        func gammaCorrect(_ value: CGFloat) -> CGFloat {
-            if value <= 0.0031308 {
-                return 12.92 * value
-            } else {
-                return 1.055 * pow(value, 1/2.2) - 0.055
-            }
-        }
-        
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         let linearR = displayP3Matrix[0, 0]
         let linearG = displayP3Matrix[1, 0]
         let linearB = displayP3Matrix[2, 0]
-
-        let red = gammaCorrect(linearR)
-        let green = gammaCorrect(linearG)
-        let blue = gammaCorrect(linearB)
-
-        return (red, green, blue)
+        return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
     }
     
-    /// This implementation makes every P3 primary color display correctly except P3 blue
     var extendedSRGB: Color {
         let (redP3, greenP3, blueP3) = displayP3Components
         let accuracy = 1e-4
         let lowerLimit = 0.0 - accuracy
         let upperLimit = 1.0 + accuracy
         let outOfP3 = redP3 < lowerLimit || redP3 > upperLimit || greenP3 < lowerLimit || greenP3 > upperLimit || blueP3 < lowerLimit || blueP3 > lowerLimit
-        print("\(name ?? representativeId) in Display P3 is \((redP3, greenP3, blueP3))")
         if !outOfP3 || true {
             let (red, green, blue) = sRGBComponents
-            print("\(name ?? representativeId) in sRGB is \((red, green, blue))")
             let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
             let color = CGColor(colorSpace: colorSpace, components: [red, green, blue, 1.0])!
             return Color(cgColor: color)
         } else {
             return Color.black
         }
-        
     }
+    
+}
+
+extension OklchColor {
+    
+    static let maxA: CGFloat = 1.0
+    static let maxB: CGFloat = 1.0
     
     var a: CGFloat {
         return oklab[1,0]
@@ -199,18 +140,39 @@ struct OklchColor: Decodable, Hashable {
         return oklab[2,0]
     }
     
-    static let maxA: CGFloat = 1.0
-    static let maxB: CGFloat = 1.0
+    var representative: OklchColor {
+        let roundedL = (l / 10).rounded() * 10
+        let roundedC = (c * 10).rounded() / 10
+        var roundedH = (h / 10).rounded() * 10
+        if roundedH == 360 {
+            roundedH = 0
+        }
+        
+        return OklchColor(name: "Color", l: roundedL, c: roundedC, h: roundedH)
+    }
     
-}
+    var representativeId: String {
+        let firstLetter = String(format: "%X", Int((l / 10).rounded()))
+        let secondLetter = String(format: "%X", Int((c * 10).rounded()))
+        let thirdLetter = String(convertToBase36(Int((h / 10).rounded())))
 
-extension OklchColor {
+        return firstLetter + secondLetter + thirdLetter
+    }
+    
+    var representativeLightness: Int {
+        let lightnessId = representativeId.prefix(1)
+        assert("0123456789A".contains(lightnessId))
+        if lightnessId == "A" {
+            return 10
+        } else {
+            return Int(lightnessId)!
+        }
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(l)
         hasher.combine(c)
         hasher.combine(h)
     }
-    
     
 }
