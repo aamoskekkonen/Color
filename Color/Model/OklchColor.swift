@@ -95,10 +95,7 @@ struct OklchColor: Decodable, Hashable {
     
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let sRGBMatrix = ColorSpaceTransformation.XYZToSRGB.matrix * self.xyz
-        let linearR = sRGBMatrix[0, 0]
-        let linearG = sRGBMatrix[1, 0]
-        let linearB = sRGBMatrix[2, 0]
-        return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
+        return gammaCorrect((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
     }
     
     var isOutOfSRGB: Bool {
@@ -106,15 +103,15 @@ struct OklchColor: Decodable, Hashable {
         let accuracy = 1e-4
         let lowerLimit = 0.0 - accuracy
         let upperLimit = 1.0 + accuracy
-        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
+        let redOk = r < lowerLimit || r > upperLimit
+        let greenOk = g < lowerLimit || g > upperLimit
+        let blueOk = b < lowerLimit || b > lowerLimit
+        return redOk && greenOk && blueOk
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
-        let linearR = displayP3Matrix[0, 0]
-        let linearG = displayP3Matrix[1, 0]
-        let linearB = displayP3Matrix[2, 0]
-        return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
+        return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
     var isOutOfDisplayP3: Bool {

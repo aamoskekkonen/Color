@@ -19,6 +19,10 @@ func gammaCorrect(_ value: CGFloat) -> CGFloat {
     }
 }
 
+func gammaCorrect(_ values: (CGFloat, CGFloat, CGFloat)) -> (CGFloat, CGFloat, CGFloat) {
+    return (gammaCorrect(values.0), gammaCorrect(values.1), gammaCorrect(values.2))
+}
+
 func convertToBase36(_ number: Int) -> Character {
     let base36Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let index = number % base36Letters.count
