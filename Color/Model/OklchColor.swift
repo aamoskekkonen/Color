@@ -83,10 +83,9 @@ struct OklchColor: Decodable, Hashable {
     
     private var lms: Matrix {
         let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
-        let linearLms = Matrix(column: (pow(nonLinearLms[0, 0], 3),
-                                        pow(nonLinearLms[1, 0], 3),
-                                        pow(nonLinearLms[2, 0], 3)))
-        return linearLms
+        return Matrix(column: (pow(nonLinearLms[0, 0], 3),
+                               pow(nonLinearLms[1, 0], 3),
+                               pow(nonLinearLms[2, 0], 3)))
     }
     
     private var xyz: Matrix {
@@ -98,28 +97,9 @@ struct OklchColor: Decodable, Hashable {
         return gammaCorrect((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
     }
     
-    var isOutOfSRGB: Bool {
-        let (r, g, b) = sRGBComponents
-        let accuracy = 1e-4
-        let lowerLimit = 0.0 - accuracy
-        let upperLimit = 1.0 + accuracy
-        let redOk = r < lowerLimit || r > upperLimit
-        let greenOk = g < lowerLimit || g > upperLimit
-        let blueOk = b < lowerLimit || b > lowerLimit
-        return redOk && greenOk && blueOk
-    }
-    
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
-    }
-    
-    var isOutOfDisplayP3: Bool {
-        let (r, g, b) = displayP3Components
-        let accuracy = 1e-4
-        let lowerLimit = 0.0 - accuracy
-        let upperLimit = 1.0 + accuracy
-        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
     }
     
     var extendedSRGB: Color {
@@ -171,6 +151,25 @@ extension OklchColor {
         } else {
             return Int(lightnessId)!
         }
+    }
+    
+    var isOutOfSRGB: Bool {
+        let (r, g, b) = sRGBComponents
+        let accuracy = 1e-4
+        let lowerLimit = 0.0 - accuracy
+        let upperLimit = 1.0 + accuracy
+        let redOk = r < lowerLimit || r > upperLimit
+        let greenOk = g < lowerLimit || g > upperLimit
+        let blueOk = b < lowerLimit || b > lowerLimit
+        return redOk && greenOk && blueOk
+    }
+    
+    var isOutOfDisplayP3: Bool {
+        let (r, g, b) = displayP3Components
+        let accuracy = 1e-4
+        let lowerLimit = 0.0 - accuracy
+        let upperLimit = 1.0 + accuracy
+        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
     }
     
     func hash(into hasher: inout Hasher) {
