@@ -20,7 +20,7 @@ struct Canvas: View {
             OklchColor(name: "P3 Green", xChromaticity: 0.2520, yChromaticity: 0.6927, luminance: 0.6938),
             OklchColor(name: "P3 Blue", x: 0.2042, y: 0.0669, z: 1.0352)]
         self.vm = CanvasViewModel(
-            colors: referenceColors,
+            colors: P3Primaries,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }
@@ -76,15 +76,21 @@ struct Canvas: View {
                 .padding()
                 .frame(maxWidth: 200)
             VStack {
-                Rectangle()
-                    .frame(width: 50.0, height: 50.0)
-                    .foregroundColor(vm.lastClickedColor?.color ?? .black)
-                Text(vm.lastClickedColor?.name ?? vm.lastClickedColor?.representativeId ?? "")
-                Text("lightness = \(vm.lastClickedColor?.l ?? 0)")
-                Text("chromaticity = \(vm.lastClickedColor?.c ?? 0)")
-                Text("hue = \(vm.lastClickedColor?.h ?? 0)")
-                Text("a = \(vm.lastClickedColor?.a ?? 0)")
-                Text("b = \(vm.lastClickedColor?.b ?? 0)")
+                if vm.lastClickedColor != nil {
+                    let color = vm.lastClickedColor!
+                    Rectangle()
+                        .frame(width: 50.0, height: 50.0)
+                        .foregroundColor(color.color)
+                    Text(color.name ?? color.representativeId)
+                    Text("lightness = \(color.l)")
+                    Text("chromaticity = \(color.c)")
+                    Text("hue = \(color.h)")
+                    Text("a = \(color.a)")
+                    Text("b = \(color.b)")
+                    Text("sRGB = (\(color.sRGBComponents.red), \(color.sRGBComponents.green), \(color.sRGBComponents.blue))")
+                    Text("Display P3 = (\(color.displayP3Components.red), \(color.displayP3Components.green), \(color.displayP3Components.blue))")
+                }
+                
             }
         }
     }
