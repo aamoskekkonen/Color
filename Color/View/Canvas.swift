@@ -14,7 +14,8 @@ struct Canvas: View {
 
     init(defaultWidth: CGFloat) {
         let myColors = try! FileReader.readColors()
-        let referenceColors = [
+        let referenceColors = CanvasViewModel.referenceColors
+        let P3Primaries = [
             OklchColor(name: "P3 Red", xChromaticity: 0.6737, yChromaticity: 0.3263, luminance: 0.2388),
             OklchColor(name: "P3 Green", xChromaticity: 0.2520, yChromaticity: 0.6927, luminance: 0.6938),
             OklchColor(name: "P3 Blue", x: 0.2042, y: 0.0669, z: 1.0352)]
