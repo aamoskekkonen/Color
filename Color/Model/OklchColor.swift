@@ -153,8 +153,8 @@ extension OklchColor {
         }
     }
     
-    var isOutOfSRGB: Bool {
-        let (r, g, b) = sRGBComponents
+    private func isOutOfRange(in components: (CGFloat, CGFloat, CGFloat)) -> Bool {
+        let (r, g, b) = components
         let accuracy = 1e-4
         let lowerLimit = 0.0 - accuracy
         let upperLimit = 1.0 + accuracy
@@ -164,12 +164,12 @@ extension OklchColor {
         return redOk && greenOk && blueOk
     }
     
+    var isOutOfSRGB: Bool {
+        return isOutOfRange(in: sRGBComponents)
+    }
+    
     var isOutOfDisplayP3: Bool {
-        let (r, g, b) = displayP3Components
-        let accuracy = 1e-4
-        let lowerLimit = 0.0 - accuracy
-        let upperLimit = 1.0 + accuracy
-        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
+        return isOutOfRange(in: displayP3Components)
     }
     
     func hash(into hasher: inout Hasher) {
