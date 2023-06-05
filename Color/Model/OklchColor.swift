@@ -52,9 +52,9 @@ struct OklchColor: Decodable, Hashable {
 
     
     init(name: String? = nil, x: CGFloat, y: CGFloat, z: CGFloat) {
-        let lms: Matrix = ColorSpaceTransformation.xyzToLms.matrix * Matrix(column: (x, y, z))
+        let lms: Matrix = ColorSpaceTransformation.XYZ_to_LMS.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
-        let oklab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
+        let oklab: Matrix = ColorSpaceTransformation.nonLinearLMS_to_Oklab.matrix * nonLinearLms
                             
         let a = oklab[1, 0]
         let b = oklab[2, 0]
@@ -82,23 +82,23 @@ struct OklchColor: Decodable, Hashable {
     }
     
     private var lms: Matrix {
-        let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * self.oklab
+        let nonLinearLms = ColorSpaceTransformation.Oklab_to_nonLinearLMS.matrix * self.oklab
         return Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                pow(nonLinearLms[1, 0], 3),
                                pow(nonLinearLms[2, 0], 3)))
     }
     
     private var xyz: Matrix {
-        return ColorSpaceTransformation.lmsToXYZ.matrix * self.lms
+        return ColorSpaceTransformation.LMS_to_XYZ.matrix * self.lms
     }
     
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        let sRGBMatrix = ColorSpaceTransformation.XYZToSRGB.matrix * self.xyz
+        let sRGBMatrix = ColorSpaceTransformation.XYZ_to_sRGB.matrix * self.xyz
         return gammaCorrect((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
+        let displayP3Matrix = ColorSpaceTransformation.XYZ_to_DisplayP3.matrix * self.xyz
         return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
