@@ -44,7 +44,7 @@ struct Canvas: View {
                         let diameter = colorRepresentationData.diameter
                         ZStack {
                             Circle()
-                                .foregroundColor(color.extendedSRGB)
+                                .foregroundColor(color.color)
                                 .frame(width: diameter, height: diameter)
                                 .position(point)
                                 .onTapGesture {
@@ -77,7 +77,7 @@ struct Canvas: View {
             VStack {
                 Rectangle()
                     .frame(width: 50.0, height: 50.0)
-                    .foregroundColor(vm.lastClickedColor?.extendedSRGB ?? .black)
+                    .foregroundColor(vm.lastClickedColor?.color ?? .black)
                 Text(vm.lastClickedColor?.name ?? vm.lastClickedColor?.representativeId ?? "")
                 Text("lightness = \(vm.lastClickedColor?.l ?? 0)")
                 Text("chromaticity = \(vm.lastClickedColor?.c ?? 0)")

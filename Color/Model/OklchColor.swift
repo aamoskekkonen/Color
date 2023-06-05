@@ -33,7 +33,7 @@ struct OklchColor: Decodable, Hashable {
         let firstEleven = base36Letters[...indexOfA]
         
         assert(id.count == 3, "The id must be 3 characters long.")
-        assert(firstEleven.contains(first) && firstEleven.contains(second) && base36Letters.contains(third))
+        assert(firstEleven.contains(first) && base36Letters.contains(second) && base36Letters.contains(third))
         
         let lIndex = base36Letters.firstIndex(of: first)!
         let cIndex = base36Letters.firstIndex(of: second)!
@@ -52,17 +52,17 @@ struct OklchColor: Decodable, Hashable {
 
     
     init(name: String? = nil, x: CGFloat, y: CGFloat, z: CGFloat) {
-        self.name = name
         let lms: Matrix = ColorSpaceTransformation.xyzToLms.matrix * Matrix(column: (x, y, z))
         let nonLinearLms = Matrix(column: (cubeRoot(lms[0, 0]), cubeRoot(lms[1, 0]), cubeRoot(lms[2, 0])))
         let oklab: Matrix = ColorSpaceTransformation.nonLinearLmsToOklab.matrix * nonLinearLms
-                                  
-        self.l = oklab[0, 0] * 100
+                            
         let a = oklab[1, 0]
         let b = oklab[2, 0]
-                                  
-        self.c = sqrt(pow(a, 2) + pow(b, 2))
         let radianH = atan2(b, a)
+        
+        self.name = name
+        self.l = oklab[0, 0] * 100
+        self.c = sqrt(pow(a, 2) + pow(b, 2))
         self.h = radianH >= 0 ? (radianH / CGFloat.pi) * 180 : (radianH / CGFloat.pi) * 180 + 360
     }
     
@@ -82,14 +82,14 @@ struct OklchColor: Decodable, Hashable {
     }
     
     private var lms: Matrix {
-        let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * oklab
+        let nonLinearLms = ColorSpaceTransformation.oklabToNonLinearLms.matrix * self.oklab
         return Matrix(column: (pow(nonLinearLms[0, 0], 3),
                                pow(nonLinearLms[1, 0], 3),
                                pow(nonLinearLms[2, 0], 3)))
     }
     
     private var xyz: Matrix {
-        return ColorSpaceTransformation.lmsToXYZ.matrix * lms
+        return ColorSpaceTransformation.lmsToXYZ.matrix * self.lms
     }
     
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
@@ -102,7 +102,7 @@ struct OklchColor: Decodable, Hashable {
         return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
-    var extendedSRGB: Color {
+    var color: Color {
         let (r, g, b) = sRGBComponents
         let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
         let cgColor = CGColor(colorSpace: colorSpace, components: [r, g, b, 1])!
