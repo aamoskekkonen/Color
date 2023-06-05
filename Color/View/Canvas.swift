@@ -14,12 +14,12 @@ struct Canvas: View {
 
     init(defaultWidth: CGFloat) {
         let myColors = try! FileReader.readColors()
-        let referenceColors = CanvasViewModel.referenceColors + [
+        let referenceColors = [
             OklchColor(name: "P3 Red", xChromaticity: 0.6737, yChromaticity: 0.3263, luminance: 0.2388),
             OklchColor(name: "P3 Green", xChromaticity: 0.2520, yChromaticity: 0.6927, luminance: 0.6938),
-            OklchColor(name: "P3 Blue", xChromaticity: 0.1563, yChromaticity: 0.0512, luminance: 0.0669)]
+            OklchColor(name: "P3 Blue", x: 0.2042, y: 0.0669, z: 1.0352)]
         self.vm = CanvasViewModel(
-            colors: referenceColors + myColors,
+            colors: referenceColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }

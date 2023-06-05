@@ -134,7 +134,7 @@ struct OklchColor: Decodable, Hashable {
             if value <= 0.0031308 {
                 return 12.92 * value
             } else {
-                return 1.055 * pow(value, 1/2.4) - 0.055
+                return 1.055 * pow(value, 1/2.2) - 0.055
             }
         }
         
@@ -150,12 +150,45 @@ struct OklchColor: Decodable, Hashable {
         return (red, green, blue)
     }
     
+    var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
+        func gammaCorrect(_ value: CGFloat) -> CGFloat {
+            if value <= 0.0031308 {
+                return 12.92 * value
+            } else {
+                return 1.055 * pow(value, 1/2.2) - 0.055
+            }
+        }
+        
+        let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
+        let linearR = displayP3Matrix[0, 0]
+        let linearG = displayP3Matrix[1, 0]
+        let linearB = displayP3Matrix[2, 0]
+
+        let red = gammaCorrect(linearR)
+        let green = gammaCorrect(linearG)
+        let blue = gammaCorrect(linearB)
+
+        return (red, green, blue)
+    }
+    
+    /// This implementation makes every P3 primary color display correctly except P3 blue
     var extendedSRGB: Color {
-        let (red, green, blue) = sRGBComponents
-        print("\(name ?? representativeId) in sRGB is \((red, green, blue))")
-        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
-        let color = CGColor(colorSpace: colorSpace, components: [red, green, blue, 1.0])!
-        return Color(cgColor: color)
+        let (redP3, greenP3, blueP3) = displayP3Components
+        let accuracy = 1e-4
+        let lowerLimit = 0.0 - accuracy
+        let upperLimit = 1.0 + accuracy
+        let outOfP3 = redP3 < lowerLimit || redP3 > upperLimit || greenP3 < lowerLimit || greenP3 > upperLimit || blueP3 < lowerLimit || blueP3 > lowerLimit
+        print("\(name ?? representativeId) in Display P3 is \((redP3, greenP3, blueP3))")
+        if !outOfP3 || true {
+            let (red, green, blue) = sRGBComponents
+            print("\(name ?? representativeId) in sRGB is \((red, green, blue))")
+            let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+            let color = CGColor(colorSpace: colorSpace, components: [red, green, blue, 1.0])!
+            return Color(cgColor: color)
+        } else {
+            return Color.black
+        }
+        
     }
     
     var a: CGFloat {
