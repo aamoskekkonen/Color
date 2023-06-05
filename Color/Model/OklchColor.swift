@@ -101,6 +101,14 @@ struct OklchColor: Decodable, Hashable {
         return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
     }
     
+    var isOutOfSRGB: Bool {
+        let (r, g, b) = sRGBComponents
+        let accuracy = 1e-4
+        let lowerLimit = 0.0 - accuracy
+        let upperLimit = 1.0 + accuracy
+        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
+    }
+    
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let displayP3Matrix = ColorSpaceTransformation.XYZToDisplayP3.matrix * self.xyz
         let linearR = displayP3Matrix[0, 0]
@@ -109,20 +117,19 @@ struct OklchColor: Decodable, Hashable {
         return (gammaCorrect(linearR), gammaCorrect(linearG), gammaCorrect(linearB))
     }
     
-    var extendedSRGB: Color {
-        let (redP3, greenP3, blueP3) = displayP3Components
+    var isOutOfDisplayP3: Bool {
+        let (r, g, b) = displayP3Components
         let accuracy = 1e-4
         let lowerLimit = 0.0 - accuracy
         let upperLimit = 1.0 + accuracy
-        let outOfP3 = redP3 < lowerLimit || redP3 > upperLimit || greenP3 < lowerLimit || greenP3 > upperLimit || blueP3 < lowerLimit || blueP3 > lowerLimit
-        if !outOfP3 || true {
-            let (red, green, blue) = sRGBComponents
-            let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
-            let color = CGColor(colorSpace: colorSpace, components: [red, green, blue, 1.0])!
-            return Color(cgColor: color)
-        } else {
-            return Color.black
-        }
+        return r < lowerLimit || r > upperLimit || g < lowerLimit || g > upperLimit || b < lowerLimit || b > lowerLimit
+    }
+    
+    var extendedSRGB: Color {
+        let (r, g, b) = sRGBComponents
+        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+        let cgColor = CGColor(colorSpace: colorSpace, components: [r, g, b, 1])!
+        return Color(cgColor: cgColor)
     }
     
 }
