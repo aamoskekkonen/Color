@@ -15,10 +15,22 @@ struct Canvas: View {
     init(defaultWidth: CGFloat) {
         let myColors = try! FileReader.readColors()
         let referenceColors = CanvasViewModel.referenceColors
+        let greenLuminance = 1.3
+        let redLuminance = 0.2126 * greenLuminance
+        let blueLuminance = 0.0722 * greenLuminance
         let P3Primaries = [
-            OklchColor(name: "P3 Red", xChromaticity: 0.6737, yChromaticity: 0.3263, luminance: 0.2388),
-            OklchColor(name: "P3 Green", xChromaticity: 0.2520, yChromaticity: 0.6927, luminance: 0.6938),
-            OklchColor(name: "P3 Blue", x: 0.2042, y: 0.0669, z: 1.0352)]
+            OklchColor(name: "P3 Red",
+                       xChromaticity: 0.680,
+                       yChromaticity: 0.320,
+                       luminance: redLuminance),
+            OklchColor(name: "P3 Green",
+                       xChromaticity: 0.265,
+                       yChromaticity: 0.690,
+                       luminance: greenLuminance),
+            OklchColor(name: "P3 Blue",
+                       xChromaticity: 0.150,
+                       yChromaticity: 0.060,
+                       luminance: blueLuminance)]
         self.vm = CanvasViewModel(
             colors: P3Primaries,
             initialCanvasWidth: defaultWidth,
@@ -45,7 +57,7 @@ struct Canvas: View {
                         let diameter = colorRepresentationData.diameter
                         ZStack {
                             Circle()
-                                .foregroundColor(color.color)
+                                .foregroundColor(color.swiftUI)
                                 .frame(width: diameter, height: diameter)
                                 .position(point)
                                 .onTapGesture {
@@ -80,7 +92,7 @@ struct Canvas: View {
                     let color = vm.lastClickedColor!
                     Rectangle()
                         .frame(width: 50.0, height: 50.0)
-                        .foregroundColor(color.color)
+                        .foregroundColor(color.swiftUI)
                     Text(color.name ?? color.representativeId)
                     Text("lightness = \(color.l)")
                     Text("chromaticity = \(color.c)")

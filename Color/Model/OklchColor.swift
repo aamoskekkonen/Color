@@ -92,6 +92,7 @@ struct OklchColor: Decodable, Hashable {
         return ColorSpaceTransformation.LMS_to_XYZ.matrix * self.lms
     }
     
+    // this is wrooong!
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let sRGBMatrix = ColorSpaceTransformation.XYZ_to_sRGB.matrix * self.xyz
         return gammaCorrect((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
@@ -102,7 +103,7 @@ struct OklchColor: Decodable, Hashable {
         return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
-    var color: Color {
+    var swiftUI: Color {
         let (r, g, b) = sRGBComponents
         let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
         let cgColor = CGColor(colorSpace: colorSpace, components: [r, g, b, 1])!
