@@ -26,6 +26,7 @@
 		7E9DE2942A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */; };
 		7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */; };
 		7E9DE2A82A1DE9CD0058F2DC /* MatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */; };
+		7EC1F8042A374BCA003DC3E0 /* RGBColorSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1F8032A374BCA003DC3E0 /* RGBColorSpace.swift */; };
 		7EF73FF72A2E092F00AD5F80 /* ColorSpaceTransformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF73FF62A2E092F00AD5F80 /* ColorSpaceTransformationTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		7E9DE2932A1DE8A10058F2DC /* ColorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7E9DE2A42A1DE97C0058F2DC /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		7E9DE2A72A1DE9CD0058F2DC /* MatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTests.swift; sourceTree = "<group>"; };
+		7EC1F8032A374BCA003DC3E0 /* RGBColorSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColorSpace.swift; sourceTree = "<group>"; };
 		7EF73FF62A2E092F00AD5F80 /* ColorSpaceTransformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSpaceTransformationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +194,7 @@
 			children = (
 				7E99EA7E2A1DEAC9009C3F4F /* OklchColor.swift */,
 				7E99EA842A1DF995009C3F4F /* ColorSpaceTransformation.swift */,
+				7EC1F8032A374BCA003DC3E0 /* RGBColorSpace.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				7E22F4BB2A20D6A6009F2194 /* FileReader.swift in Sources */,
 				7E99EA852A1DF995009C3F4F /* ColorSpaceTransformation.swift in Sources */,
 				7E99EA872A1E1139009C3F4F /* MathUtils.swift in Sources */,
+				7EC1F8042A374BCA003DC3E0 /* RGBColorSpace.swift in Sources */,
 				7E9DE2A52A1DE97C0058F2DC /* Matrix.swift in Sources */,
 				7E22F4BD2A20D745009F2194 /* MainViewModel.swift in Sources */,
 				7E99EA7F2A1DEAC9009C3F4F /* OklchColor.swift in Sources */,

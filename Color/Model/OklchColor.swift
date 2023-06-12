@@ -15,6 +15,7 @@ struct OklchColor: Decodable, Hashable {
     let c: CGFloat
     let h: CGFloat
 
+    /// This works correctly
     init(name: String? = nil, l: CGFloat, c: CGFloat, h: CGFloat) {
         self.name = name
         self.l = l
@@ -66,6 +67,7 @@ struct OklchColor: Decodable, Hashable {
         self.h = radianH >= 0 ? (radianH / CGFloat.pi) * 180 : (radianH / CGFloat.pi) * 180 + 360
     }
     
+    /// This works correctly
     init(name: String? = nil, xChromaticity: CGFloat, yChromaticity: CGFloat, luminance: CGFloat) {
         let x = (xChromaticity * luminance) / yChromaticity
         let y = luminance
@@ -73,14 +75,17 @@ struct OklchColor: Decodable, Hashable {
         self.init(name: name, x: x, y: y, z: z)
     }
     
+    /// This works correctly
     private var hInRadians: CGFloat {
         return (h / 360) * 2 * CGFloat.pi
     }
     
+    /// This works correctly
     private var oklab: Matrix {
         return Matrix(column: (l / 100, c * cos(hInRadians), c * sin(hInRadians)))
     }
     
+    /// This works correctly
     private var lms: Matrix {
         let nonLinearLms = ColorSpaceTransformation.Oklab_to_nonLinearLMS.matrix * self.oklab
         return Matrix(column: (pow(nonLinearLms[0, 0], 3),
@@ -88,24 +93,25 @@ struct OklchColor: Decodable, Hashable {
                                pow(nonLinearLms[2, 0], 3)))
     }
     
-    private var xyz: Matrix {
+    /// This works correctly
+    var xyz: Matrix {
         return ColorSpaceTransformation.LMS_to_XYZ.matrix * self.lms
     }
     
     // this is wrooong!
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        let sRGBMatrix = ColorSpaceTransformation.XYZ_to_sRGB.matrix * self.xyz
-        return gammaCorrect((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
+        let sRGBMatrix = RGBColorSpace.sRGB.transformationMatrixFromXYZ * self.xyz
+        return gammaCorrect_sRGB((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        let displayP3Matrix = ColorSpaceTransformation.XYZ_to_DisplayP3.matrix * self.xyz
-        return gammaCorrect((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
+        let displayP3Matrix = RGBColorSpace.displayP3.transformationMatrixFromXYZ * self.xyz
+        return gammaCorrect_displayP3((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
     var swiftUI: Color {
-        let (r, g, b) = sRGBComponents
-        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+        let (r, g, b) = displayP3Components
+        let colorSpace = CGColorSpace(name: CGColorSpace.displayP3)!
         let cgColor = CGColor(colorSpace: colorSpace, components: [r, g, b, 1])!
         return Color(cgColor: cgColor)
     }
@@ -123,6 +129,23 @@ extension OklchColor {
     
     var b: CGFloat {
         return oklab[2,0]
+    }
+    
+    var x: CGFloat {
+        return xyz[0,0]
+    }
+    
+    var y: CGFloat {
+        return xyz[1,0]
+    }
+    
+    var z: CGFloat {
+        return xyz[2,0]
+    }
+    
+    var xyY: (x: CGFloat, y: CGFloat, Y: CGFloat) {
+        let sum = x + y + z
+        return (x / sum, y / sum, y)
     }
     
     var representative: OklchColor {
@@ -178,5 +201,8 @@ extension OklchColor {
         hasher.combine(c)
         hasher.combine(h)
     }
+    
+    static var d50 = OklchColor(x: 0.964, y: 1, z: 0.825)
+    static var d65 = OklchColor(x: 0.950, y: 1, z: 1.089)
     
 }
