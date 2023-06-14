@@ -13,16 +13,17 @@ struct Canvas: View {
     @State private var isEditing = false
 
     init(defaultWidth: CGFloat) {
-        print(RGBColorSpace.sRGB.transformationMatrixToXYZ)
+        print(RGBColorSpace.displayP3.transformationMatrixToXYZ)
         let myColors = try! FileReader.readColors()
         let referenceColors = CanvasViewModel.referenceColors
         let P3Primaries = [
             RGBColorSpace.displayP3.red,
             RGBColorSpace.displayP3.green,
-            RGBColorSpace.displayP3.blue
+            RGBColorSpace.displayP3.blue,
+            OklchColor.d50
         ]
         self.vm = CanvasViewModel(
-            colors: P3Primaries,
+            colors: myColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }
@@ -89,11 +90,11 @@ struct Canvas: View {
                     Text("hue = \(color.h)")
                     Text("a = \(color.a)")
                     Text("b = \(color.b)")
-                    Text("sRGB = (\(color.sRGBComponents.red), \(color.sRGBComponents.green), \(color.sRGBComponents.blue))")
+                    Text("sRGB = (\(color.sRGBComponents.red * 255), \(color.sRGBComponents.green * 255), \(color.sRGBComponents.blue * 255))")
                     Text("Display P3 = (\(color.displayP3Components.red), \(color.displayP3Components.green), \(color.displayP3Components.blue))")
                     VStack {
                         Text("XYZ = (\(color.x), \(color.y), \(color.z))")
-                        Text("xyY = (\(color.xyY.x), \(color.xyY.y), \(color.xyY.Y))")
+                        Text("xyY = (\(color.chromaticity.x), \(color.chromaticity.y), \(color.y))")
                     }
                 }
                 

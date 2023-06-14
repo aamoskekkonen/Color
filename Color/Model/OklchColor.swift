@@ -106,7 +106,7 @@ struct OklchColor: Decodable, Hashable {
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let displayP3Matrix = RGBColorSpace.displayP3.transformationMatrixFromXYZ * self.xyz
-        return gammaCorrect_displayP3((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
+        return gammaCorrect_sRGB((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
     var swiftUI: Color {
@@ -143,9 +143,9 @@ extension OklchColor {
         return xyz[2,0]
     }
     
-    var xyY: (x: CGFloat, y: CGFloat, Y: CGFloat) {
+    var chromaticity: (x: CGFloat, y: CGFloat) {
         let sum = x + y + z
-        return (x / sum, y / sum, y)
+        return (x / sum, y / sum)
     }
     
     var representative: OklchColor {
@@ -202,7 +202,7 @@ extension OklchColor {
         hasher.combine(h)
     }
     
-    static var d50 = OklchColor(x: 0.964, y: 1, z: 0.825)
-    static var d65 = OklchColor(x: 0.950, y: 1, z: 1.089)
+    static var d50 = OklchColor(name: "D50", x: 0.964, y: 1, z: 0.825)
+    static var d65 = OklchColor(name: "D65", x: 0.950, y: 1, z: 1.089)
     
 }

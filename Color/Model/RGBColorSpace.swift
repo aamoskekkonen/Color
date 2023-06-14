@@ -18,9 +18,9 @@ class RGBColorSpace {
     
     var transformationMatrixToXYZ: Matrix {
         let primariesC = primaries.map { primary in
-            primary.xyY
+            primary.chromaticity
         }
-        let whiteC = white.xyY
+        let whiteC = white.chromaticity
         let M_prime = Matrix([
             [primariesC[0].x / primariesC[0].y, primariesC[1].x / primariesC[1].y, primariesC[2].x / primariesC[2].y],
             [1.0, 1.0, 1.0],
@@ -65,18 +65,24 @@ extension RGBColorSpace {
     }
     
     static var sRGB: RGBColorSpace {
-        let red = OklchColor(x: 0.436, y: 0.222, z: 0.014)
-        let green = OklchColor(x: 0.385, y: 0.717, z: 0.097)
-        let blue = OklchColor(x: 0.143, y: 0.061, z: 0.714)
+        let red = OklchColor(name: "sRGB Red", x: 0.436, y: 0.222, z: 0.014)
+        let green = OklchColor(name: "sRGB Green", x: 0.385, y: 0.717, z: 0.097)
+        let blue = OklchColor(name: "sRGB Blue", x: 0.143, y: 0.061, z: 0.714)
         let white = OklchColor.d65
         return RGBColorSpace(primaries: [red, green, blue], white: white)
     }
     
     static var displayP3: RGBColorSpace {
-        let red = OklchColor(x: 0.515, y: 0.241, z: -0.001)
-        let green = OklchColor(x: 0.292, y: 0.692, z: 0.042)
-        let blue = OklchColor(x: 0.157, y: 0.067, z: 0.784)
-        let white = OklchColor.d50
+//        let red = OklchColor(name: "P3 Red", x: 0.515, y: 0.241, z: -0.001)
+//        let green = OklchColor(name: "P3 Green", x: 0.292, y: 0.692, z: 0.042)
+//        let blue = OklchColor(name: "P3 Blue", x: 0.157, y: 0.067, z: 0.784)
+        let red = OklchColor(name: "P3 Red", l: 64.9, c: 0.299, h: 29.03)
+        let green = OklchColor(name: "P3 Green", l: 84.88, c: 0.36852781063661505, h: 145.64495037017772)
+        let blue = OklchColor(name: "P3 Blue", l: 46.64, c: 0.323, h: 264.05)
+//        let red = OklchColor(x: 0.68, y: 0.32, z: 0)
+//        let green = OklchColor(x: 0.265, y: 0.69, z: 0.045)
+//        let blue = OklchColor(x: 0.15, y: 0.06, z: 0.79)
+        let white = OklchColor.d65
         return RGBColorSpace(primaries: [red, green, blue], white: white)
     }
 }
