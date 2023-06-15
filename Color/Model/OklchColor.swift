@@ -79,7 +79,6 @@ struct OklchColor: Decodable, Hashable {
         let r = gammaDecode_sRGB(CGFloat(sRGBRed) / 255)
         let g = gammaDecode_sRGB(CGFloat(sRGBGreen) / 255)
         let b = gammaDecode_sRGB(CGFloat(sRGBBlue) / 255)
-        print((r, g, b))
         let xyz = RGBColorSpace.sRGB.transformationMatrixToXYZ * Matrix(column: (r, g, b))
         self.init(name: name, x: xyz[0,0], y: xyz[1,0], z: xyz[2,0])
     }
