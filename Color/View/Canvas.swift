@@ -13,7 +13,6 @@ struct Canvas: View {
     @State private var isEditing = false
 
     init(defaultWidth: CGFloat) {
-        print(RGBColorSpace.displayP3.transformationMatrixToXYZ)
         let myColors = try! FileReader.readColors()
         let referenceColors = CanvasViewModel.referenceColors
         let P3Primaries = [
@@ -22,8 +21,11 @@ struct Canvas: View {
             RGBColorSpace.displayP3.blue,
             OklchColor.d50
         ]
+        let testColors = [
+            OklchColor(name: "Lilac", sRGBRed: 200, sRGBGreen: 162, sRGBBlue: 200)
+        ]
         self.vm = CanvasViewModel(
-            colors: myColors,
+            colors: testColors,
             initialCanvasWidth: defaultWidth,
             initialPointDiameter: 8.0)
     }

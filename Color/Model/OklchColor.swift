@@ -75,6 +75,15 @@ struct OklchColor: Decodable, Hashable {
         self.init(name: name, x: x, y: y, z: z)
     }
     
+    init(name: String? = nil, sRGBRed: Int, sRGBGreen: Int, sRGBBlue: Int) {
+        let r = gammaDecode_sRGB(CGFloat(sRGBRed) / 255)
+        let g = gammaDecode_sRGB(CGFloat(sRGBGreen) / 255)
+        let b = gammaDecode_sRGB(CGFloat(sRGBBlue) / 255)
+        print((r, g, b))
+        let xyz = RGBColorSpace.sRGB.transformationMatrixToXYZ * Matrix(column: (r, g, b))
+        self.init(name: name, x: xyz[0,0], y: xyz[1,0], z: xyz[2,0])
+    }
+    
     /// This works correctly
     private var hInRadians: CGFloat {
         return (h / 360) * 2 * CGFloat.pi
@@ -101,12 +110,12 @@ struct OklchColor: Decodable, Hashable {
     // this is wrooong!
     var sRGBComponents: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let sRGBMatrix = RGBColorSpace.sRGB.transformationMatrixFromXYZ * self.xyz
-        return gammaCorrect_sRGB((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
+        return gammaEncode_sRGB((sRGBMatrix[0, 0], sRGBMatrix[1, 0], sRGBMatrix[2, 0]))
     }
     
     var displayP3Components: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         let displayP3Matrix = RGBColorSpace.displayP3.transformationMatrixFromXYZ * self.xyz
-        return gammaCorrect_sRGB((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
+        return gammaEncode_sRGB((displayP3Matrix[0, 0], displayP3Matrix[1, 0], displayP3Matrix[2, 0]))
     }
     
     var swiftUI: Color {
